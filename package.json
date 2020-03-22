@@ -1,0 +1,71 @@
+{
+    "name": "iot-power-meter-app-ui",
+    "version": "0.0.1",
+    "description": "A simple UI",
+    "engines": {
+        "node": ">=13.8.0"
+    },
+    "scripts": {
+        "lint": "tslint -p \"tsconfig.json\" \"./src/**/*.ts\" -t verbose",
+        "start:dev": "ts-node -r tsconfig-paths/register src/index.ts",
+        "test": "jest"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/freeride8/iot-power-meter-app-ui.git"
+    },
+    "author": "Alexander Targov",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/freeride8/iot-power-meter-app-ui/issues"
+    },
+    "homepage": "https://github.com/freeride8/iot-power-meter-app-ui#readme",
+    "dependencies": {
+        "@amcharts/amcharts4": "4.9.10",
+        "@angular/animations": "~9.0.6",
+        "@angular/common": "~9.0.6",
+        "@angular/compiler": "~9.0.6",
+        "@angular/core": "~9.0.6",
+        "@angular/forms": "~9.0.6",
+        "@angular/platform-browser": "~9.0.6",
+        "@angular/platform-browser-dynamic": "~9.0.6",
+        "@angular/router": "~9.0.6",
+        "codelyzer": "5.2.1",
+        "rxjs": "~6.5.4",
+        "tslib": "^1.10.0",
+        "zone.js": "~0.10.2"
+    },
+    "devDependencies": {
+        "@angular-devkit/build-angular": "~0.900.6",
+        "@angular/cli": "~9.0.6",
+        "@angular/compiler-cli": "~9.0.6",
+        "@angular/language-service": "~9.0.6",
+        "@types/amcharts": "3.21.5",
+        "@types/node": "^12.11.1",
+        "jest": "25.1.0",
+        "ts-jest": "25.2.1",
+        "tsconfig-paths": "3.9.0",
+        "tslint": "6.1.0",
+        "typescript": "3.6.4"
+    },
+    "jest": {
+        "moduleFileExtensions": [
+            "ts",
+            "tsx",
+            "js",
+            "jsx",
+            "json",
+            "node"
+        ],
+        "roots": [
+            "<rootDir>/src"
+        ],
+        "rootDir": ".",
+        "testRegex": "(\\.)(test|spec)\\.(jsx?|tsx?)$",
+        "transform": {
+            "^.+\\.(js|ts)$": "<rootDir>/node_modules/ts-jest"
+        },
+        "coverageDirectory": "./coverage",
+        "testEnvironment": "node"
+    }
+}
