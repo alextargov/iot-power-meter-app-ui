@@ -21,7 +21,7 @@
     },
     "homepage": "https://github.com/freeride8/iot-power-meter-app-ui#readme",
     "dependencies": {
-        "@amcharts/amcharts4": "4.9.10",
+        "@amcharts/amcharts3-angular": "2.2.4",
         "@angular/animations": "~9.0.6",
         "@angular/common": "~9.0.6",
         "@angular/compiler": "~9.0.6",
@@ -30,7 +30,10 @@
         "@angular/platform-browser": "~9.0.6",
         "@angular/platform-browser-dynamic": "~9.0.6",
         "@angular/router": "~9.0.6",
+        "amcharts3": "3.21.15",
         "codelyzer": "5.2.1",
+        "lodash": "4.17.15",
+        "moment": "2.24.0",
         "rxjs": "~6.5.4",
         "tslib": "^1.10.0",
         "zone.js": "~0.10.2"
@@ -41,6 +44,7 @@
         "@angular/compiler-cli": "~9.0.6",
         "@angular/language-service": "~9.0.6",
         "@types/amcharts": "3.21.5",
+        "@types/moment": "2.13.0",
         "@types/node": "^12.11.1",
         "jest": "25.1.0",
         "ts-jest": "25.2.1",
