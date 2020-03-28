@@ -1,3 +1,8 @@
-export interface IConfigInterface {
-    APP_API_URL: string;
+export interface IConfig {
+    id?: string;
+    key: string;
+    value: any;
+
+    createdAt?: Date;
+    updatedAt?: Date;
 }

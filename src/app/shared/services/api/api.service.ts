@@ -4,12 +4,12 @@ import { trimEnd, trimStart } from 'lodash';
 import { Observable, throwError as observableThrowError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { ConfigService } from '../config/config.service';
+import { AppConfigService } from '../app-config/app-config.service';
 
 @Injectable()
 export class ApiService {
     constructor(
-        private readonly configService: ConfigService,
+        private readonly appConfigService: AppConfigService,
         private readonly httpClient: HttpClient,
     ) {}
 
@@ -30,7 +30,7 @@ export class ApiService {
             requestOptions.body = data;
         }
 
-        const url = `${trimEnd(this.configService.get('APP_API_URL'), '/')}/${trimStart(path, '/')}`;
+        const url = `${trimEnd(this.appConfigService.get('APP_API_URL'), '/')}/${trimStart(path, '/')}`;
 
         return (this.httpClient.request<T>(method, url, requestOptions) as Observable<any>)
             .pipe(

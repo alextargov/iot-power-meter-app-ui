@@ -1,21 +1,20 @@
-import { Injectable, Inject } from '@angular/core';
-import { defaultsDeep } from 'lodash';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
-import { IConfigInterface } from './config.interface';
-
-const defaultConfig: IConfigInterface = {
-    APP_API_URL: 'http://localhost:3000',
-};
+import { ApiService } from '../api/api.service';
+import { IConfig } from './config.interface';
 
 @Injectable()
 export class ConfigService {
-    private readonly config: IConfigInterface;
+    private readonly route = '/config';
 
-    constructor(@Inject('app.config') appConfig: IConfigInterface) {
-        this.config = defaultsDeep(appConfig, defaultConfig);
+    constructor(private readonly apiService: ApiService) {}
+
+    public getAll(): Observable<IConfig[]> {
+        return this.apiService.request(this.route);
     }
 
-    public get(key: string): string {
-        return this.config[key];
+    public get(name: string): Observable<IConfig> {
+        return this.apiService.request(`${this.route}/${name}`);
     }
 }
