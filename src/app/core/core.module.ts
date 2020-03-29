@@ -4,6 +4,9 @@ import { CommonModule } from '@angular/common';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
 @NgModule({
     imports: [
         FormsModule,
@@ -12,6 +15,8 @@ import { MatNativeDateModule } from '@angular/material/core';
         MatRadioModule,
         MatDatepickerModule,
         MatNativeDateModule,
+        MatFormFieldModule,
+        MatInputModule,
     ],
     exports: [
         FormsModule,
@@ -20,6 +25,8 @@ import { MatNativeDateModule } from '@angular/material/core';
         MatRadioModule,
         MatDatepickerModule,
         MatNativeDateModule,
+        MatFormFieldModule,
+        MatInputModule
     ]
 })
 
