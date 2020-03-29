@@ -1,0 +1,24 @@
+.time-frame {
+    &--wrapper {
+        display: flex;
+        width: 100%;
+        margin: 1rem 0;
+    }
+
+    &--datepickers {
+        display: flex;
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    &--label {
+        flex: 2;
+        text-align: right;
+    }
+
+    &--radio-group {
+        display: flex;
+        flex: 1;
+        justify-content: space-around;
+    }
+}
