@@ -12,11 +12,22 @@ import { ICurrent } from './shared/interfaces/current.interface';
 export class AppComponent implements OnInit {
     public measurementData: IMeasurement[];
     public currentData: ICurrent[];
+    public timeFrame: any;
 
     constructor(private readonly measurementService: MeasurementService) {}
 
     public ngOnInit(): any {
-        this.measurementService.getMeasurements()
+        this.getData();
+    }
+
+    public onTimeFrameChange(event: any): void {
+        console.log(event)
+        this.timeFrame = event;
+        this.getData();
+    }
+
+    private getData(): void {
+        this.measurementService.getMeasurements(this.timeFrame)
             .subscribe((measurements) => {
                 this.measurementData = measurements;
 

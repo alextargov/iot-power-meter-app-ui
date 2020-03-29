@@ -11,8 +11,8 @@ export class MeasurementService  {
     constructor(private readonly apiService: ApiService) {
     }
 
-    public getMeasurements(): Observable<IMeasurement[]> {
-        return this.apiService.request(this.route);
+    public getMeasurements(timeFrame): Observable<IMeasurement[]> {
+        return this.apiService.request(this.route, { data: timeFrame });
     }
 
     public getApplianceMeasurements(appliance: string): Observable<[]> {

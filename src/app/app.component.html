@@ -1,2 +1,3 @@
 <router-outlet></router-outlet>
-<app-current *ngIf="currentData" [data]="currentData"></app-current>
+<app-time-frame (timeFrameChangeEmitter)="onTimeFrameChange($event)"></app-time-frame>
+<app-current [timeFrame]="timeFrame" *ngIf="currentData" [data]="currentData"></app-current>

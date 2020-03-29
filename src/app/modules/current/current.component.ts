@@ -10,6 +10,7 @@ import { ICurrent } from '../../shared/interfaces/current.interface';
 })
 export class CurrentComponent implements AfterViewInit {
     @Input() public data: ICurrent[];
+    @Input() public timeFrame: any;
 
     @ViewChild('chart', { static: false }) public _selector: ElementRef;
 
