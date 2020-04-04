@@ -1,0 +1,14 @@
+.electricity-graphs {
+    display: flex;
+
+    &--current,
+    &--voltage {
+        display: block;
+        flex: 1;
+    }
+}
+
+.consumption-graph {
+    display: block;
+    margin-top: 2rem;
+}

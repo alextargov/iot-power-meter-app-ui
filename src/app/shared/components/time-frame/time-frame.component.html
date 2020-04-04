@@ -18,7 +18,7 @@
 <div class="time-frame--datepickers">
     <mat-form-field>
         <mat-label>Choose a start date</mat-label>
-        <input disabled matInput [matDatepicker]="pickerStart">
+        <input disabled matInput ngModel (ngModelChange)="datePickerStartChange($event)" [matDatepicker]="pickerStart">
         <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
         <mat-datepicker [disabled]="selected !== 'custom'" #pickerStart></mat-datepicker>
     </mat-form-field>

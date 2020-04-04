@@ -17,6 +17,8 @@ import { CurrentModule } from './modules/current/current.module';
 import { ServicesModule } from './shared/services/services.module';
 import { CoreModule } from './core/core.module';
 import { ComponentsModule } from './shared/components/components.module';
+import { VoltageModule } from './modules/voltage/voltage.module';
+import { ConsumptionModule } from './modules/consumption/consumption.module';
 
 @NgModule({
     declarations: [
@@ -35,6 +37,8 @@ import { ComponentsModule } from './shared/components/components.module';
         ComponentsModule,
         ServicesModule,
         CurrentModule,
+        VoltageModule,
+        ConsumptionModule
     ],
     providers: [
         {
