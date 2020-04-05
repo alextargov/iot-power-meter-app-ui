@@ -20,8 +20,7 @@ export class ChartService {
                 align: 'center',
                 alpha: 0.5,
                 rotation: 0
-            }]
-        console.log(labels);
+            }];
 
         return {
             type: 'serial',
@@ -35,9 +34,9 @@ export class ChartService {
                 minimumDate,
                 maximumDate,
             }],
+            showOnInit: false,
             graphs: [{
                 id: 'g1',
-                fillAlphas: 0.1,
                 lineAlpha: 1,
                 valueField: 'value',
                 balloonText: `<div style=\'margin:5px; font-size:19px;\'>${config.balloonText} <b>[[value]]</b></div>`
@@ -47,13 +46,10 @@ export class ChartService {
                 graph: 'g1',
                 scrollbarHeight: 50,
                 backgroundAlpha: 0,
-                selectedBackgroundAlpha: 0.1,
                 selectedBackgroundColor: '#888888',
                 graphFillAlpha: 0,
-                graphLineAlpha: 0.5,
                 selectedGraphFillAlpha: 0,
                 selectedGraphLineAlpha: 1,
-                // autoGridCount: true,
                 color: '#AAAAAA',
                 offset: 15,
             },
