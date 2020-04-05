@@ -2,6 +2,20 @@ import * as moment from 'moment';
 import { ITimeFrame } from '../timeFrame/time-frame.interface';
 
 export class ChartService {
+
+    public checkForLabels(data: any[]): any {
+        return data && data.length ?
+        [] :
+        [{
+            id: 'noData',
+            x: 0,
+            y: '50%',
+            text: 'The chart contains no data',
+            align: 'center',
+            alpha: 0.5,
+            rotation: 0
+        }];
+    }
     public getSerialChartConfig(timeFrame: ITimeFrame, timeFrameRanges: object, data: any[], config: any): object {
         const minimumDate = timeFrame && timeFrameRanges ?
             timeFrameRanges[timeFrame.frame].startDate :
@@ -10,17 +24,8 @@ export class ChartService {
         const maximumDate = timeFrame && timeFrameRanges ?
             timeFrameRanges[timeFrame.frame].endDate :
             moment().endOf('day');
-        const labels = data && data.length ?
-            [] :
-            [{
-                id: 'noData',
-                x: 0,
-                y: '50%',
-                text: 'The chart contains no data',
-                align: 'center',
-                alpha: 0.5,
-                rotation: 0
-            }];
+
+        const labels = this.checkForLabels(data);
 
         return {
             type: 'serial',

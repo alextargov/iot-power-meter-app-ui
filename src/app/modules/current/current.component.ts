@@ -6,6 +6,7 @@ import { ICurrent } from '../../shared/interfaces/current.interface';
 import { TimeFrameService } from '../../shared/services/timeFrame/time-frame.service';
 import { ITimeFrame } from '../../shared/services/timeFrame/time-frame.interface';
 import { ChartService } from '../../shared/services/chart/chart.service';
+import { TimeFrames } from '../../shared/services/timeFrame/time-frames.enum';
 
 @Component({
     selector: 'app-current',
@@ -17,6 +18,11 @@ export class CurrentComponent implements OnInit, AfterViewInit, OnChanges {
     @Input() public timeFrame: any;
 
     private timeFrameRanges: { [key: string]: ITimeFrame };
+    private isZoomed = false;
+    private chartIndex = {
+        start: 0,
+        end: 0
+    }
 
     @ViewChild('chart', { static: false }) public _selector: ElementRef;
 
@@ -39,26 +45,22 @@ export class CurrentComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     public async ngOnChanges(change): Promise<void> {
-        // const startDateChange = get(change, ['timeFrame', 'currentValue', 'startDate']);
-        // const endDateChange = get(change, ['timeFrame', 'currentValue', 'endDate']);
-        // const isCustomDate = get(change, ['timeFrame', 'currentValue', 'frame']) === TimeFrames.custom;
-
-        // if (isCustomDate && startDateChange && endDateChange) {
-        //     this.timeFrameRanges = {
-        //         ...this.timeFrameRanges,
-        //         [TimeFrames.custom]: {
-        //             frame: TimeFrames.custom,
-        //             startDate: startDateChange,
-        //             endDate: endDateChange
-        //         }
-        //     }
-        // }
         if (change.timeFrame) {
             await this.getTimeFrames();
         }
 
         if (change.data && this._selector) {
-            this.createChart(this.data);
+            this.chart.clearLabels();
+            const label = this.chartService.checkForLabels(this.data)[0];
+
+            if (label) {
+                this.chart.addLabel(label.x, label.y, label.text, label.align);
+            }
+
+            if (!this.isZoomed && this.timeFrame.frame === TimeFrames.today) {
+                this.chart.dataProvider = this.data;
+                this.chart.validateData();
+            }
         }
     }
 
@@ -70,59 +72,25 @@ export class CurrentComponent implements OnInit, AfterViewInit, OnChanges {
 
         const chartConfig = this.chartService.getSerialChartConfig(this.timeFrame, this.timeFrameRanges, data, config)
         this.chart = this.amChartsService.makeChart(this._selector.nativeElement, chartConfig);
-    }
 
-    public getChartConfig(data: ICurrent[]): any {
-        const minimumDate = this.timeFrame && this.timeFrameRanges ?
-            this.timeFrameRanges[this.timeFrame.frame].startDate :
-            moment().startOf('day');
-
-        const maximumDate = this.timeFrame && this.timeFrameRanges ?
-            this.timeFrameRanges[this.timeFrame.frame].endDate :
-            moment().endOf('day');
-
-        return {
-            type: 'xy',
-            theme: 'light',
-            startDuration: 0,
-            export: {
-                enabled: true
-            },
-            chartScrollbar: {
-                offset: 15,
-                scrollbarHeight: 5,
-            },
-            chartCursor:{
-               pan:true,
-               cursorAlpha:0,
-               valueLineAlpha:0
-            },
-            graphs: [{
-                bullet: 'diamond',
-                lineAlpha: 1,
-                lineColor: '#b0de09',
-                xField: 'date',
-                yField: 'value'
-            }],
-            valueAxes: [
-
-                {
-                    id: 'ValueAxis-2',
-                    axisAlpha: 1,
-                    position: 'bottom',
-                    type: 'date',
-                    minimumDate,
-                    maximumDate,
-                    duration: 'hh',
-                    minPeriod: 'mm'
-                }
-            ],
-            dataProvider: data,
-            pathToImages: 'assets/amcharts/images/'
-        };
+        this.chart.addListener('zoomed', this.onZoom.bind(this));
+        this.chart.addListener('dataUpdated', this.onDataUpdated.bind(this));
     }
 
     private async getTimeFrames(): Promise<void> {
         this.timeFrameRanges = await this.timeFrameService.getTimeFrame(this.timeFrame).toPromise();
+    }
+
+    private onZoom(event): void {
+        this.isZoomed = !(event.startIndex === this.chartIndex.start && event.endIndex === this.chartIndex.end)
+    }
+
+    private onDataUpdated(event): void {
+        this.chartIndex = {
+            start: event.chart.startIndex,
+            end: event.chart.endIndex
+        }
+
+        this.onZoom(this.chart);
     }
 }
