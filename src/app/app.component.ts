@@ -6,7 +6,6 @@ import { MeasurementService } from './shared/services/measurement/measurement.se
 
 import { TimeFrames } from './shared/services/timeFrame/time-frames.enum';
 
-import { IMeasurement } from './shared/services/measurement/measurement.interface';
 import { ICurrent } from './shared/interfaces/current.interface';
 import { IVoltage } from './shared/interfaces/voltage.interface';
 import { ITimeFrame } from './shared/services/timeFrame/time-frame.interface';
@@ -18,7 +17,6 @@ import { IConsumption } from './shared/interfaces/consumption.interface';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-    public measurementData: IMeasurement[];
     public currentData: ICurrent[] = [];
     public voltageData: IVoltage[] = [];
     public consumptionData: IConsumption[] = [];
@@ -28,11 +26,14 @@ export class AppComponent implements OnInit, OnDestroy {
 
     constructor(private readonly measurementService: MeasurementService) {
         this.job = new CronJob('*/5 * * * * *', () => {
+            const lastData = this.voltageData.length ? this.voltageData[this.voltageData.length - 1].date : new Date();
+
             this.getData(
                 {
                     frame: TimeFrames.custom,
-                    startDate: new Date(),
-                    endDate: moment.utc().endOf('day').toDate()
+                    startDate: moment.utc(lastData).subtract(moment().utcOffset(), 'minutes').add(1, 'second').toDate(),
+                    endDate: moment.utc().endOf('day').toDate(),
+                    wholeDay: false
                 },
                 true
             );
