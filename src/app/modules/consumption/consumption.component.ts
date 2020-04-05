@@ -4,7 +4,7 @@ import { Component, Input, ViewChild, ElementRef, AfterViewInit, OnChanges, OnIn
 import { TimeFrameService } from '../../shared/services/timeFrame/time-frame.service';
 import { ITimeFrame } from '../../shared/services/timeFrame/time-frame.interface';
 import { ChartService } from '../../shared/services/chart/chart.service';
-import { IVoltage } from '../../shared/interfaces/voltage.interface';
+import { IConsumption } from '../../shared/interfaces/consumption.interface';
 
 @Component({
     selector: 'app-consumption',
@@ -12,7 +12,7 @@ import { IVoltage } from '../../shared/interfaces/voltage.interface';
     styleUrls: ['consumption.component.scss'],
 })
 export class ConsumptionComponent implements OnInit, AfterViewInit, OnChanges {
-    @Input() public data: IVoltage[];
+    @Input() public data: IConsumption[];
     @Input() public timeFrame: any;
 
     private timeFrameRanges: { [key: string]: ITimeFrame };
