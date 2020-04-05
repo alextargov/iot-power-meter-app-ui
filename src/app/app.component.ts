@@ -1,67 +1,115 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { CronJob } from 'cron';
+import * as moment from 'moment';
 
 import { MeasurementService } from './shared/services/measurement/measurement.service';
+
+import { TimeFrames } from './shared/services/timeFrame/time-frames.enum';
+
 import { IMeasurement } from './shared/services/measurement/measurement.interface';
 import { ICurrent } from './shared/interfaces/current.interface';
 import { IVoltage } from './shared/interfaces/voltage.interface';
+import { ITimeFrame } from './shared/services/timeFrame/time-frame.interface';
+import { IConsumption } from './shared/interfaces/consumption.interface';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
     public measurementData: IMeasurement[];
-    public currentData: ICurrent[];
-    public voltageData: IVoltage[];
-    public consumptionData: IVoltage[];
+    public currentData: ICurrent[] = [];
+    public voltageData: IVoltage[] = [];
+    public consumptionData: IConsumption[] = [];
     public timeFrame: any;
 
-    constructor(private readonly measurementService: MeasurementService) {}
+    private job: CronJob;
 
-    public ngOnInit(): any {
-        this.getData();
+    constructor(private readonly measurementService: MeasurementService) {
+        this.job = new CronJob('*/5 * * * * *', () => {
+            this.getData(
+                {
+                    frame: TimeFrames.custom,
+                    startDate: new Date(),
+                    endDate: moment.utc().endOf('day').toDate()
+                },
+                true
+            );
+        });
+    }
+
+    public ngOnInit(): void {
+        this.getData(this.timeFrame);
+
+
+        this.job.start();
     }
 
     public onTimeFrameChange(event: any): void {
         this.timeFrame = event;
 
-        this.getData();
+        this.getData(this.timeFrame);
     }
 
-    private getData(): void {
-        this.measurementService.getMeasurements(this.timeFrame)
-            .subscribe((measurements) => {
-                this.measurementData = measurements;
+    public ngOnDestroy(): void {
+        this.job.stop();
+    }
 
-                const { currentData, voltageData, consumptionData } = measurements.reduce((collection, currentElement) => ({
+    private async getData(
+        timeFrame: ITimeFrame,
+        append: boolean = false
+    ): Promise<void> {
+        this.measurementService.getMeasurements(timeFrame).subscribe((measurements) => {
+            const {
+                consumptionData,
+                currentData,
+                voltageData
+            } = measurements.reduce(
+                (collection, currentElement) => ({
                     ...collection,
                     currentData: [
                         ...collection.currentData,
                         {
-                            date: currentElement.createdAt,
-                            value: currentElement.current
+                            date: new Date(currentElement.createdAt),
+                            value: Number(currentElement.current.toFixed(2))
                         }
                     ],
                     voltageData: [
                         ...collection.voltageData,
                         {
-                            date: currentElement.createdAt,
-                            value: currentElement.voltage
+                            date: new Date(currentElement.createdAt),
+                            value: Number(currentElement.voltage.toFixed(2))
                         }
                     ],
                     consumptionData: [
-                        ...collection.voltageData,
+                        ...collection.consumptionData,
                         {
-                            date: currentElement.createdAt,
-                            value: currentElement.voltage * currentElement.current
+                            date: new Date(currentElement.createdAt),
+                            value: Number(currentElement.power.toFixed(2))
                         }
                     ]
-                }), { currentData: [], voltageData: [], consumptionData: [] });
+                }),
+                {
+                    currentData: [] as ICurrent[],
+                    voltageData: [] as IVoltage[],
+                    consumptionData: [] as IConsumption[]
+                }
+            );
 
-                this.currentData = currentData;
-                this.voltageData = voltageData;
-                this.voltageData = consumptionData;
-            });
+            this.setData(currentData, voltageData, consumptionData, append);
+        });
+    }
+
+    private setData(currentData: ICurrent[], voltageData: IVoltage[], consumptionData: IConsumption[], append: boolean): void {
+        if (append) {
+            this.consumptionData = [...this.consumptionData, ...consumptionData];
+            this.currentData = [...this.currentData, ...currentData];
+            this.voltageData = [...this.voltageData, ...voltageData];
+        } else {
+            this.consumptionData = consumptionData;
+            this.voltageData = voltageData;
+            this.currentData = currentData;
+        }
     }
 }
