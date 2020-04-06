@@ -14,11 +14,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CurrentModule } from './modules/current/current.module';
-import { ServicesModule } from './shared/services/services.module';
 import { CoreModule } from './core/core.module';
-import { ComponentsModule } from './shared/components/components.module';
 import { VoltageModule } from './modules/voltage/voltage.module';
 import { ConsumptionModule } from './modules/consumption/consumption.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
     declarations: [
@@ -34,11 +33,10 @@ import { ConsumptionModule } from './modules/consumption/consumption.module';
         CoreModule,
         BrowserAnimationsModule,
 
-        ComponentsModule,
-        ServicesModule,
+        SharedModule,
         CurrentModule,
         VoltageModule,
-        ConsumptionModule
+        ConsumptionModule,
     ],
     providers: [
         {

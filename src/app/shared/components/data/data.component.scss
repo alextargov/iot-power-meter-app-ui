@@ -1,0 +1,20 @@
+.data-graphs {
+    display: flex;
+
+    &--current,
+    &--voltage,
+    &--consumption {
+        display: flex;
+        align-items: center;
+        flex: 1;
+
+        &-graph {
+            width: 100%;
+            flex: 1;
+        }
+    }
+
+    &--consumption {
+        margin-top: 2rem;
+    }
+}
