@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
-import { ITimeFrame } from '../../shared/services/timeFrame/time-frame.interface';
-import { IConsumption } from '../../shared/interfaces/consumption.interface';
+import { ITimeFrame } from '../../services/timeFrame/time-frame.interface';
+import { IConsumption } from '../../interfaces/consumption.interface';
 
 @Component({
     selector: 'app-consumption',

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
-import { ITimeFrame } from '../../shared/services/timeFrame/time-frame.interface';
-import { IVoltage } from '../../shared/interfaces/voltage.interface';
+import { ITimeFrame } from '../../services/timeFrame/time-frame.interface';
+import { IVoltage } from '../../interfaces/voltage.interface';
 
 @Component({
     selector: 'app-voltage',

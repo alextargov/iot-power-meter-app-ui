@@ -13,11 +13,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CurrentModule } from './modules/current/current.module';
 import { CoreModule } from './core/core.module';
-import { VoltageModule } from './modules/voltage/voltage.module';
-import { ConsumptionModule } from './modules/consumption/consumption.module';
 import { SharedModule } from './shared/shared.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { StatisticsModule } from './modules/statistics/statistics.module';
 
 @NgModule({
     declarations: [
@@ -34,9 +33,8 @@ import { SharedModule } from './shared/shared.module';
         BrowserAnimationsModule,
 
         SharedModule,
-        CurrentModule,
-        VoltageModule,
-        ConsumptionModule,
+        StatisticsModule,
+        AuthModule,
     ],
     providers: [
         {

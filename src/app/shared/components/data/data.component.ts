@@ -51,6 +51,9 @@ export class DataComponent implements OnInit, AfterViewInit, OnChanges {
     public async ngOnChanges(change: SimpleChanges): Promise<void> {
         if (change.timeFrame) {
             await this.getTimeFrames();
+
+            // this.chart.categoryAxis.minPeriod = this.chartService.getChartPeriods(this.timeFrame, this.timeFrameRanges).minPeriod;
+            // console.log(this.chart.categoryAxis.minPeriod);
         }
 
         if (change.data && this.chartElement && this.chart && this.timeFrame) {

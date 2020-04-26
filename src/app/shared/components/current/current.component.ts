@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
-import { ICurrent } from '../../shared/interfaces/current.interface';
-import { ITimeFrame } from '../../shared/services/timeFrame/time-frame.interface';
+import { ICurrent } from '../../interfaces/current.interface';
+import { ITimeFrame } from '../../services/timeFrame/time-frame.interface';
 
 @Component({
     selector: 'app-current',
