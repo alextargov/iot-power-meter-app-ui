@@ -6,6 +6,7 @@ import { MeasurementService } from './measurement/measurement.service';
 import { ConfigService } from './config/config.service';
 import { TimeFrameService } from './timeFrame/time-frame.service';
 import { ChartService } from './chart/chart.service';
+import { AuthService } from './auth/auth.service';
 
 @NgModule({
     providers: [
@@ -14,7 +15,8 @@ import { ChartService } from './chart/chart.service';
         ConfigService,
         MeasurementService,
         TimeFrameService,
-        ChartService
+        ChartService,
+        AuthService
     ],
 })
 export class ServicesModule {}
