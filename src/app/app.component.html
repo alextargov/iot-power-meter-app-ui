@@ -1,8 +1,1 @@
 <router-outlet></router-outlet>
-<app-time-frame (timeFrameChangeEmitter)="onTimeFrameChange($event)"></app-time-frame>
-<div class="electricity-graphs">
-    <app-current class="electricity-graphs--current" [timeFrame]="timeFrame" *ngIf="currentData" [data]="currentData"></app-current>
-    <app-voltage class="electricity-graphs--voltage" [timeFrame]="timeFrame" *ngIf="voltageData" [data]="voltageData"></app-voltage>
-</div>
-
-<app-consumption class="consumption-graph" [timeFrame]="timeFrame" *ngIf="consumptionData" [data]="consumptionData"></app-consumption>
