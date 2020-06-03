@@ -1,0 +1,18 @@
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.login-card {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    width: 30%;
+
+    &--content {
+        display: flex;
+        flex-direction: column;
+    }
+}
