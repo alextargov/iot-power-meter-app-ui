@@ -8,10 +8,12 @@ import { VoltageComponent } from './voltage/voltage.component';
 import { CurrentComponent } from './current/current.component';
 import { HeaderComponent } from './header/header.component';
 import { NavigationComponent } from './navigation/navigation.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     imports: [
         CoreModule,
+        RouterModule
     ],
     declarations: [
         ConsumptionComponent,

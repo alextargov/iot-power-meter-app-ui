@@ -14,10 +14,12 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     exports: [
         CommonModule,
+        RouterModule,
         CdkTableModule,
         FormsModule,
         MatFormFieldModule,
@@ -36,6 +38,7 @@ import { MatBadgeModule } from '@angular/material/badge';
     ],
     imports: [
         CommonModule,
+        RouterModule,
         CdkTableModule,
         FormsModule,
         MatFormFieldModule,

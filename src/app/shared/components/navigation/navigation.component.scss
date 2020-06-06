@@ -1,8 +1,3 @@
-:host {
-    // position: fixed;
-    // height: 100%;
-}
-
 .navigation {
     &__wrapper {
         background-color: #101c33;
@@ -24,6 +19,8 @@
             opacity: 0.5;
             line-height: 2;
             cursor: pointer;
+            text-decoration: none;
+            color: #fff;
 
             &:hover {
                 opacity: 1;

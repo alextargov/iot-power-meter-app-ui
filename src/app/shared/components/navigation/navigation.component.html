@@ -1,20 +1,30 @@
 <nav class="navigation__wrapper">
     <ul class="navigation__menu">
-        <li class="navigation__menu-item">
-            <mat-icon
-            class="navigation__menu-item-icon"
-                aria-hidden="false"
-                aria-label="Example home icon"
-            >insert_chart_outlined</mat-icon>
-            <span>Dashboard</span>
+        <li>
+            <a
+                class="navigation__menu-item"
+                routerLink="/dashboard"
+                routerLinkActive="active">
+                <mat-icon
+                    class="navigation__menu-item-icon"
+                    aria-hidden="false"
+                    aria-label="Example home icon"
+                >insert_chart_outlined</mat-icon>
+                <span>Dashboard</span>
+            </a>
         </li>
-        <li class="navigation__menu-item">
-            <mat-icon
-                class="navigation__menu-item-icon"
-                aria-hidden="false"
-                aria-label="Example home icon"
-            >tv</mat-icon>
-            <span>Devices</span>
+        <li>
+            <a
+                class="navigation__menu-item"
+                routerLink="/devices"
+                routerLinkActive="active">
+                <mat-icon
+                    class="navigation__menu-item-icon"
+                    aria-hidden="false"
+                    aria-label="Example home icon"
+                >tv</mat-icon>
+                <span>Devices</span>
+            </a>
         </li>
     </ul>
 </nav>

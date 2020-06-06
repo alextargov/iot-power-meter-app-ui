@@ -71,7 +71,6 @@ export class ChartService {
         return {
             type: 'serial',
             theme: 'light',
-            marginRight: 80,
             dataProvider: data,
             startDuration: 0,
             valueAxes: [{
