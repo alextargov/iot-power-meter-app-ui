@@ -66,6 +66,7 @@ export class DataComponent implements OnInit, AfterViewInit, OnChanges {
         additionalConfig: any,
         chartElement: ElementRef,
     ): AmChart {
+        console.log('createChart', data);
         const chartConfig = this.chartService.getSerialChartConfig(this.timeFrame, this.timeFrameRanges, data, additionalConfig)
         const chartInstance = this.amChartsService.makeChart(chartElement.nativeElement, chartConfig);
 

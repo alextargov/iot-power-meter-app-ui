@@ -10,8 +10,10 @@ export class AuthInterceptor implements HttpInterceptor {
 
     public intercept(req: HttpRequest<any>, next: HttpHandler): Observable <HttpEvent<any>> {
         const token = sessionStorage.getItem('access_token');
+        const blacklistedRedirectRoutes = ['register', 'login'];
+        const isUrlWhitelisted = !req.url.split('/').some((urlSegment) => blacklistedRedirectRoutes.includes(urlSegment));
 
-        if (!token) {
+        if (!token && isUrlWhitelisted) {
             location.href = '/login';
             return observableOf();
         }
@@ -24,7 +26,6 @@ export class AuthInterceptor implements HttpInterceptor {
                 // ['Access-Control-Allow-Headers']: 'Origin, X-Requested-With, Access-Control-Allow-Headers, Content-Type, Authorization'
             }
         });
-        console.log(req);
         return next.handle(req);
     }
 }

@@ -26,7 +26,6 @@ import { CurrentComponent } from './current/current.component';
         DataComponent
     ],
     entryComponents: [
-
         TimeFrameComponent,
         DataComponent
     ]

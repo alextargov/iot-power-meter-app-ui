@@ -60,52 +60,58 @@ export class StatisticsComponent implements OnInit, OnDestroy {
         timeFrame: ITimeFrame,
         append: boolean = false
     ): Promise<void> {
-        this.measurementService.getMeasurements(timeFrame).subscribe((measurements) => {
-            const {
-                consumptionData,
-                currentData,
-                voltageData
-            } = measurements.reduce(
-                (collection, currentElement) => ({
-                    ...collection,
-                    currentData: [
-                        ...collection.currentData,
-                        {
-                            date: new Date(currentElement.createdAt),
-                            value: Number(currentElement.current.toFixed(2))
-                        }
-                    ],
-                    voltageData: [
-                        ...collection.voltageData,
-                        {
-                            date: new Date(currentElement.createdAt),
-                            value: Number(currentElement.voltage.toFixed(2))
-                        }
-                    ],
-                    consumptionData: [
-                        ...collection.consumptionData,
-                        {
-                            date: new Date(
-                                new Date(currentElement.createdAt).getFullYear(),
-                                new Date(currentElement.createdAt).getMonth(),
-                                new Date(currentElement.createdAt).getUTCDate(),
-                                new Date(currentElement.createdAt).getUTCHours(),
-                                new Date(currentElement.createdAt).getUTCMinutes(),
-                                new Date(currentElement.createdAt).getUTCSeconds(),
-                            ),
-                            value: Number(currentElement.power.toFixed(2))
-                        }
-                    ]
-                }),
-                {
-                    currentData: [] as ICurrent[],
-                    voltageData: [] as IVoltage[],
-                    consumptionData: [] as IConsumption[]
+        this.measurementService.getMeasurements(timeFrame)
+            .subscribe((measurements) => {
+                if (!measurements.length) {
+                    return;
                 }
-            );
-            console.log(consumptionData[0]);
-            this.setData(currentData, voltageData, consumptionData as any, append);
-        });
+
+                const {
+                    consumptionData,
+                    currentData,
+                    voltageData
+                } = measurements.reduce(
+                    (collection, currentElement) => ({
+                        ...collection,
+                        currentData: [
+                            ...collection.currentData,
+                            {
+                                date: new Date(currentElement.createdAt),
+                                value: Number(currentElement.current.toFixed(2))
+                            }
+                        ],
+                        voltageData: [
+                            ...collection.voltageData,
+                            {
+                                date: new Date(currentElement.createdAt),
+                                value: Number(currentElement.voltage.toFixed(2))
+                            }
+                        ],
+                        consumptionData: [
+                            ...collection.consumptionData,
+                            {
+                                date: new Date(
+                                    new Date(currentElement.createdAt).getFullYear(),
+                                    new Date(currentElement.createdAt).getMonth(),
+                                    new Date(currentElement.createdAt).getUTCDate(),
+                                    new Date(currentElement.createdAt).getUTCHours(),
+                                    new Date(currentElement.createdAt).getUTCMinutes(),
+                                    new Date(currentElement.createdAt).getUTCSeconds(),
+                                ),
+                                value: Number(currentElement.power.toFixed(2))
+                            }
+                        ]
+                    }),
+                    {
+                        currentData: [] as ICurrent[],
+                        voltageData: [] as IVoltage[],
+                        consumptionData: [] as IConsumption[]
+                    }
+                );
+
+                this.setData(currentData, voltageData, consumptionData as any, append);
+                console.log(this.consumptionData[0]);
+            });
     }
 
     private setData(currentData: ICurrent[], voltageData: IVoltage[], consumptionData: IConsumption[], append: boolean): void {

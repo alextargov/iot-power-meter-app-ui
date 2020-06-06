@@ -1,33 +1,53 @@
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { MatSelectModule } from '@angular/material/select';
+import { CdkTableModule } from '@angular/cdk/table';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
-    imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        CommonModule,
-        MatRadioModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatFormFieldModule,
-        MatInputModule,
-    ],
     exports: [
-        FormsModule,
-        ReactiveFormsModule,
         CommonModule,
+        CdkTableModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatSortModule,
+        MatTableModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        MatNativeDateModule,
         MatRadioModule,
         MatDatepickerModule,
-        MatNativeDateModule,
+        MatCardModule,
+        MatButtonModule
+    ],
+    imports: [
+        CommonModule,
+        CdkTableModule,
+        FormsModule,
         MatFormFieldModule,
-        MatInputModule
-    ]
+        MatIconModule,
+        MatInputModule,
+        MatSortModule,
+        MatTableModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        MatNativeDateModule,
+        MatRadioModule,
+        MatDatepickerModule,
+        MatCardModule,
+        MatButtonModule
+    ],
 })
-
 export class CoreModule {}

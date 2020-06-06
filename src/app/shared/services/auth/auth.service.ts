@@ -12,7 +12,6 @@ export class AuthService  {
     }
 
     public login(user: IUser): Observable<{ token: string }> {
-        console.log(user);
         return this.apiService.request(`${this.route}/login`, {
             method: 'post',
             data: user

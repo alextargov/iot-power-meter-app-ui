@@ -1,5 +1,6 @@
 import * as moment from 'moment';
 import { ITimeFrame } from '../timeFrame/time-frame.interface';
+import { TimeFrames } from '../timeFrame/time-frames.enum';
 
 export class ChartService {
 
@@ -16,7 +17,9 @@ export class ChartService {
             rotation: 0
         }];
     }
-    public getSerialChartConfig(timeFrame: ITimeFrame, timeFrameRanges: object, data: any[], config: any): object {
+
+    public getChartPeriods(timeFrame: ITimeFrame, timeFrameRanges?: object): { minPeriod: string, minimumDate: Date, maximumDate: Date} {
+        const selectedTimeFrame = timeFrame ? timeFrame.frame : TimeFrames.today;
         const minimumDate = timeFrame && timeFrameRanges ?
             timeFrameRanges[timeFrame.frame].startDate :
             moment().startOf('day');
@@ -25,6 +28,44 @@ export class ChartService {
             timeFrameRanges[timeFrame.frame].endDate :
             moment().endOf('day');
 
+        let minPeriod: string;
+
+        switch(selectedTimeFrame) {
+            case TimeFrames.last30days:
+                minPeriod = 'dd';
+                break;
+            case TimeFrames.last7days:
+                minPeriod = 'hh';
+                break;
+            case TimeFrames.today:
+                minPeriod = 'mm';
+                break;
+            case TimeFrames.custom:
+                const different = moment(maximumDate).diff(minimumDate, 'minute');
+
+                if (different >= 60 * 24 * 7) {
+                    minPeriod = 'dd';
+                } else if (different >= 60 * 24) {
+                    minPeriod = 'hh';
+                } else {
+                    minPeriod = 'ss'
+                }
+                break;
+        }
+
+        return {
+            minPeriod,
+            minimumDate,
+            maximumDate
+        }
+    }
+
+    public getSerialChartConfig(timeFrame: ITimeFrame, timeFrameRanges: object, data: any[], config: any): object {
+        const {
+            minimumDate,
+            maximumDate,
+            minPeriod
+        } = this.getChartPeriods(timeFrame, timeFrameRanges);
         const labels = this.checkForLabels(data);
 
         return {
@@ -47,6 +88,7 @@ export class ChartService {
                 balloonText: `<div style=\'margin:5px; font-size:19px;\'>${config.balloonText} <b>[[value]]</b></div>`
             }],
             allLabels: labels,
+            dataDateFormat: 'DD MMM YYYY JJ:NN:SS',
             chartScrollbar: {
                 graph: 'g1',
                 scrollbarHeight: 50,
@@ -65,7 +107,7 @@ export class ChartService {
             },
             categoryField: 'date',
             categoryAxis: {
-                minPeriod: 'ss',
+                minPeriod,
                 parseDates: true
             },
             export: {

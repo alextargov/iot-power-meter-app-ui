@@ -4,7 +4,7 @@ import { defaultsDeep } from 'lodash';
 import { IAppConfigInterface } from './app-config.interface';
 
 const defaultConfig: IAppConfigInterface = {
-    APP_API_URL: 'http://localhost:3000',
+    APP_API_URL: 'http://localhost:3200',
 };
 
 @Injectable()
