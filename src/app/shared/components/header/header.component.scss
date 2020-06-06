@@ -1,0 +1,27 @@
+.header {
+    &__wrapper {
+        background-color: #4680ff;
+        height: 3.5rem;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 2rem;
+    }
+
+    &__left,
+    &__right {
+        align-self: center;
+    }
+
+    &__right {
+        &-icon {
+            margin: 0 1rem;
+            opacity: .7;
+            font-size: 1.8rem;
+
+            &:hover {
+                cursor: pointer;
+                opacity: 1;
+            }
+        }
+    }
+}

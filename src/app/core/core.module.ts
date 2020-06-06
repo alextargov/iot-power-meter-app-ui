@@ -13,6 +13,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
     exports: [
@@ -30,7 +31,8 @@ import { MatButtonModule } from '@angular/material/button';
         MatRadioModule,
         MatDatepickerModule,
         MatCardModule,
-        MatButtonModule
+        MatButtonModule,
+        MatBadgeModule,
     ],
     imports: [
         CommonModule,
@@ -47,7 +49,8 @@ import { MatButtonModule } from '@angular/material/button';
         MatRadioModule,
         MatDatepickerModule,
         MatCardModule,
-        MatButtonModule
+        MatButtonModule,
+        MatBadgeModule
     ],
 })
 export class CoreModule {}

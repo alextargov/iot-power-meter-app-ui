@@ -12,11 +12,11 @@
         [timeFrame]="timeFrame"
         [data]="voltageData">
     </app-voltage>
+    <app-consumption
+        *ngIf="consumptionData.length"
+        class="consumption-graph"
+        [timeFrame]="timeFrame"
+        [data]="consumptionData">
+    </app-consumption>
 </div>
 
-<app-consumption
-    *ngIf="consumptionData.length"
-    class="consumption-graph"
-    [timeFrame]="timeFrame"
-    [data]="consumptionData">
-</app-consumption>

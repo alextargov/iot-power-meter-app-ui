@@ -1,0 +1,38 @@
+:host {
+    // position: fixed;
+    // height: 100%;
+}
+
+.navigation {
+    &__wrapper {
+        background-color: #101c33;
+        width: 15rem;
+        color: #fff;
+        height: 100%;
+        padding: 2rem 1rem;
+        font-size: 1.2rem;
+    }
+
+    &__menu {
+        margin: 0;
+        list-style: none;
+
+        &-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            opacity: 0.5;
+            line-height: 2;
+            cursor: pointer;
+
+            &:hover {
+                opacity: 1;
+            }
+
+            &-icon {
+                margin-right: 1rem;
+                font-size: 1.5rem;
+            }
+        }
+    }
+}

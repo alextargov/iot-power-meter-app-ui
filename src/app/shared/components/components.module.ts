@@ -6,6 +6,8 @@ import { DataComponent } from './data/data.component';
 import { ConsumptionComponent } from './consumption/consumption.component';
 import { VoltageComponent } from './voltage/voltage.component';
 import { CurrentComponent } from './current/current.component';
+import { HeaderComponent } from './header/header.component';
+import { NavigationComponent } from './navigation/navigation.component';
 
 @NgModule({
     imports: [
@@ -16,14 +18,18 @@ import { CurrentComponent } from './current/current.component';
         CurrentComponent,
         VoltageComponent,
         TimeFrameComponent,
-        DataComponent
+        DataComponent,
+        HeaderComponent,
+        NavigationComponent,
     ],
     exports: [
         ConsumptionComponent,
         CurrentComponent,
         VoltageComponent,
         TimeFrameComponent,
-        DataComponent
+        DataComponent,
+        HeaderComponent,
+        NavigationComponent
     ],
     entryComponents: [
         TimeFrameComponent,
