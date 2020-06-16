@@ -1,4 +1,4 @@
-<div class="time-frame--wrapper">
+<div class="time-frame--wrapper row">
     <label class="time-frame--label" id="time-frame--label">Select time frame</label>
     <mat-radio-group
         aria-labelledby="time-frame--label"
@@ -14,19 +14,21 @@
             {{timeFrame.name}}
         </mat-radio-button>
     </mat-radio-group>
-</div>
-<div class="time-frame--datepickers">
-    <mat-form-field>
-        <mat-label>Choose a start date</mat-label>
-        <input disabled matInput ngModel (ngModelChange)="datePickerStartChange($event)" [matDatepicker]="pickerStart">
-        <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
-        <mat-datepicker [disabled]="selected !== 'custom'" #pickerStart></mat-datepicker>
-    </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>Choose an end date</mat-label>
-        <input ngModel (ngModelChange)="datePickerEndChange($event)" disabled matInput [matDatepicker]="pickerEnd">
-        <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
-        <mat-datepicker [disabled]="selected !== 'custom'" #pickerEnd></mat-datepicker>
-    </mat-form-field>
+    <div *ngIf="selected === 'custom'" class="time-frame--datepickers">
+        <mat-form-field>
+            <mat-label>Choose a start date</mat-label>
+            <input disabled matInput ngModel (ngModelChange)="datePickerStartChange($event)" [matDatepicker]="pickerStart">
+            <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+            <mat-datepicker [disabled]="selected !== 'custom'" #pickerStart></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Choose an end date</mat-label>
+            <input ngModel (ngModelChange)="datePickerEndChange($event)" disabled matInput [matDatepicker]="pickerEnd">
+            <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+            <mat-datepicker [disabled]="selected !== 'custom'" #pickerEnd></mat-datepicker>
+        </mat-form-field>
+    </div>
 </div>
+

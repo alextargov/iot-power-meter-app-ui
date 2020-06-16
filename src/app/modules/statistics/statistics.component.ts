@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone } from '@angular/core';
 import { CronJob } from 'cron';
 import * as moment from 'moment';
 
@@ -19,10 +19,9 @@ export class StatisticsComponent implements OnInit, OnDestroy {
     public voltageData: IVoltage[] = [];
     public consumptionData: IConsumption[] = [];
     public timeFrame: any;
-
     private job: CronJob;
 
-    constructor(private readonly measurementService: MeasurementService) {
+    constructor(private readonly measurementService: MeasurementService, private zone: NgZone) {
         this.job = new CronJob('*/5 * * * * *', () => {
             const lastData = this.voltageData.length ? this.voltageData[this.voltageData.length - 1].date : new Date();
 
@@ -33,8 +32,8 @@ export class StatisticsComponent implements OnInit, OnDestroy {
                     endDate: moment.utc().endOf('day').toDate(),
                     wholeDay: false
                 },
-                true
             );
+
         });
     }
 
@@ -43,7 +42,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
             this.getData(this.timeFrame);
         }
         setTimeout(() => this.getData(this.timeFrame), 1000);
-        // this.job.start();
+        this.job.start();
     }
 
     public onTimeFrameChange(event: any): void {
@@ -58,7 +57,6 @@ export class StatisticsComponent implements OnInit, OnDestroy {
 
     private async getData(
         timeFrame: ITimeFrame,
-        append: boolean = false
     ): Promise<void> {
         this.measurementService.getMeasurements(timeFrame)
             .subscribe((measurements) => {
@@ -90,14 +88,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
                         consumptionData: [
                             ...collection.consumptionData,
                             {
-                                date: new Date(
-                                    new Date(currentElement.createdAt).getFullYear(),
-                                    new Date(currentElement.createdAt).getMonth(),
-                                    new Date(currentElement.createdAt).getUTCDate(),
-                                    new Date(currentElement.createdAt).getUTCHours(),
-                                    new Date(currentElement.createdAt).getUTCMinutes(),
-                                    new Date(currentElement.createdAt).getUTCSeconds(),
-                                ),
+                                date: new Date(currentElement.createdAt),
                                 value: Number(currentElement.power.toFixed(2))
                             }
                         ]
@@ -109,20 +100,13 @@ export class StatisticsComponent implements OnInit, OnDestroy {
                     }
                 );
 
-                this.setData(currentData, voltageData, consumptionData as any, append);
-                console.log(this.consumptionData[0]);
+                this.setData(currentData, voltageData, consumptionData as any);
             });
     }
 
-    private setData(currentData: ICurrent[], voltageData: IVoltage[], consumptionData: IConsumption[], append: boolean): void {
-        if (append) {
-            this.consumptionData = [...this.consumptionData, ...consumptionData];
-            this.currentData = [...this.currentData, ...currentData];
-            this.voltageData = [...this.voltageData, ...voltageData];
-        } else {
-            this.consumptionData = consumptionData;
-            this.voltageData = voltageData;
-            this.currentData = currentData;
-        }
+    private setData(currentData: ICurrent[], voltageData: IVoltage[], consumptionData: IConsumption[]): void {
+        this.consumptionData = consumptionData;
+        this.voltageData = voltageData;
+        this.currentData = currentData;
     }
 }

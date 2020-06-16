@@ -1,5 +1,5 @@
-<app-header></app-header>
+<app-header *ngIf="authToken"></app-header>
 <div class="main-page">
-    <app-navigation></app-navigation>
+    <app-navigation *ngIf="authToken"></app-navigation>
     <router-outlet></router-outlet>
 </div>

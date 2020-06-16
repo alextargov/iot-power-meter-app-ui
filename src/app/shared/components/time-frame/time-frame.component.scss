@@ -6,23 +6,24 @@
     &--wrapper {
         display: flex;
         width: 100%;
-        margin: 1rem 0;
+        margin-top: 0 !important;
+        align-items: center;
+        min-height: 3.6rem ;
     }
 
     &--datepickers {
         display: flex;
-        width: 100%;
-        justify-content: flex-end;
     }
 
     &--label {
-        flex: 2;
-        text-align: right;
+        margin-right: 2rem;
     }
 
     &--radio-group {
         display: flex;
-        flex: 1;
-        justify-content: space-around;
+
+        &-item {
+            margin: 0 1rem;
+        }
     }
 }

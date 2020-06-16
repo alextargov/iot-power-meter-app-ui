@@ -1,5 +1,5 @@
 import { AmChartsService, AmChart } from '@amcharts/amcharts3-angular';
-import { Component, Input, ViewChild, ElementRef, AfterViewInit, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef, AfterViewInit, OnChanges, OnInit, SimpleChanges, NgZone } from '@angular/core';
 
 import { IVoltage } from '../../interfaces/voltage.interface';
 import { ICurrent } from '../../interfaces/current.interface';
@@ -9,6 +9,16 @@ import { TimeFrames } from '../../services/timeFrame/time-frames.enum';
 
 import { TimeFrameService } from '../../services/timeFrame/time-frame.service';
 import { ChartService } from '../../services/chart/chart.service';
+
+
+import * as am4core from '@amcharts/amcharts4/core';
+import * as am4charts from '@amcharts/amcharts4/charts';
+import am4themes_animated from '@amcharts/amcharts4/themes/animated';
+am4core.options.queue = true;
+am4core.options.onlyShowOnViewport = false;
+am4core.options.animationsEnabled = false;
+
+am4core.useTheme(am4themes_animated);
 
 @Component({
     selector: 'app-data',
@@ -20,22 +30,15 @@ export class DataComponent implements OnInit, AfterViewInit, OnChanges {
     @Input() public timeFrame: ITimeFrame;
     @Input() public title: string;
     @Input() public config: any;
+    private chart: am4charts.XYChart;
 
     private timeFrameRanges: { [key: string]: ITimeFrame };
-    private isZoomed = false;
-    private chartIndex = {
-        start: 0,
-        end: 0
-    }
 
-    @ViewChild('chart', { static: false }) public chartElement: ElementRef;
-
-    public chart: AmChart;
+    @ViewChild('chart', { static: false }) public chartElement: HTMLElement;
 
     constructor(
-        private readonly amChartsService: AmChartsService,
         private readonly timeFrameService: TimeFrameService,
-        private readonly chartService: ChartService
+        private readonly zone: NgZone,
     ) {}
 
     public async ngOnInit(): Promise<void> {
@@ -45,7 +48,34 @@ export class DataComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     public ngAfterViewInit(): void {
-        this.chart = this.createChart(this.data, this.config, this.chartElement);
+        this.zone.runOutsideAngular(() => {
+            const chart = am4core.create(this.title, am4charts.XYChart);
+
+            chart.data = this.data;
+
+            const dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+            dateAxis.renderer.grid.template.location = 0;
+            dateAxis.groupData = true;
+            dateAxis.groupCount = 200;
+
+            dateAxis.minZoomCount = 5;
+
+            const valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+            valueAxis.tooltip.disabled = true;
+            valueAxis.renderer.minWidth = 35;
+
+            const series = chart.series.push(new am4charts.LineSeries());
+            series.dataFields.dateX = 'date';
+            series.dataFields.valueY = 'value';
+
+            series.tooltipText = '{valueY.value}';
+            chart.cursor = new am4charts.XYCursor();
+
+            const scrollbarX = new am4charts.XYChartScrollbar();
+            scrollbarX.series.push(series);
+            chart.scrollbarX = scrollbarX;
+            this.chart = chart;
+        });
     }
 
     public async ngOnChanges(change: SimpleChanges): Promise<void> {
@@ -56,54 +86,18 @@ export class DataComponent implements OnInit, AfterViewInit, OnChanges {
             // console.log(this.chart.categoryAxis.minPeriod);
         }
 
-        if (change.data && this.chartElement && this.chart && this.timeFrame) {
+        if (change.data && this.chart && this.timeFrame) {
             this.onDataChange(this.data, this.chart);
         }
     }
 
-    public createChart(
-        data: IConsumption[] | ICurrent[] | IVoltage [],
-        additionalConfig: any,
-        chartElement: ElementRef,
-    ): AmChart {
-        console.log('createChart', data);
-        const chartConfig = this.chartService.getSerialChartConfig(this.timeFrame, this.timeFrameRanges, data, additionalConfig)
-        const chartInstance = this.amChartsService.makeChart(chartElement.nativeElement, chartConfig);
-
-        chartInstance.addListener('zoomed', this.onZoom.bind(this));
-        chartInstance.addListener('dataUpdated', this.onDataUpdated.bind(this));
-
-        return chartInstance;
-    }
-
-    private onDataChange(data: IConsumption[] | ICurrent[] | IVoltage [], chart: AmChart): void {
-        chart.clearLabels();
-        const label = this.chartService.checkForLabels(data)[0];
-
-        if (label) {
-            chart.addLabel(label.x, label.y, label.text, label.align);
-        }
-
-        if (!this.isZoomed && this.timeFrame.frame === TimeFrames.today) {
-            chart.dataProvider = data;
-            chart.validateData();
+    private onDataChange(data: IConsumption[] | ICurrent[] | IVoltage [], chart: am4charts.XYChart): void {
+        if (this.timeFrame.frame === TimeFrames.today) {
+            chart.addData(data, 0);
         }
     }
 
     private async getTimeFrames(): Promise<void> {
         this.timeFrameRanges = await this.timeFrameService.getTimeFrame(this.timeFrame).toPromise();
-    }
-
-    private onZoom(event): void {
-        this.isZoomed = !(event.startIndex === this.chartIndex.start && event.endIndex === this.chartIndex.end);
-    }
-
-    private onDataUpdated(event): void {
-        this.chartIndex = {
-            start: event.chart.startIndex,
-            end: event.chart.endIndex
-        }
-
-        this.onZoom(this.chart);
     }
 }

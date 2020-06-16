@@ -24,4 +24,8 @@ export class AuthService  {
             user
         });
     }
+
+    public getToken(): string {
+        return sessionStorage.getItem('access_token');
+    }
 }

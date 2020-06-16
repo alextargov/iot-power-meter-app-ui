@@ -5,5 +5,14 @@
     overflow-y: scroll;
     overflow-x: hidden;
     margin: 0;
-    padding: 2rem 1rem;
+    padding: 0 1rem;
+}
+
+.electricity-graphs {
+    display: flex;
+
+    &--voltage,
+    &--current {
+        flex: 1;
+    }
 }

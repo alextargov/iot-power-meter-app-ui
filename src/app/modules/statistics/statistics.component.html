@@ -2,21 +2,21 @@
 <div class="electricity-graphs">
     <app-current
         *ngIf="currentData.length"
-        class="electricity-graphs--current"
+        class="electricity-graphs--current card"
         [timeFrame]="timeFrame"
         [data]="currentData">
     </app-current>
     <app-voltage
         *ngIf="voltageData.length"
-        class="electricity-graphs--voltage"
+        class="electricity-graphs--voltage card"
         [timeFrame]="timeFrame"
         [data]="voltageData">
     </app-voltage>
-    <app-consumption
+</div>
+<app-consumption
         *ngIf="consumptionData.length"
-        class="consumption-graph"
+        class="consumption-graph card"
         [timeFrame]="timeFrame"
         [data]="consumptionData">
-    </app-consumption>
-</div>
+</app-consumption>
 
