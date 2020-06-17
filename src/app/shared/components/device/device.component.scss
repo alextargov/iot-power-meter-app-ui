@@ -1,0 +1,47 @@
+.device {
+    &--item {
+        flex-basis: unset;
+        flex-grow: unset;
+        margin-bottom: 1.4545rem;
+        padding: 0.72725rem 0;
+        align-self: flex-start;
+        flex: 0 0 auto;
+        max-width: 100%;
+        min-width:  0;
+        border-radius: 0.72725rem !important;
+
+        &-running {
+            color: #00bd56;
+        }
+
+        &-stopped {
+            color: #fa4659;
+        }
+
+        &-details {
+            display: flex;
+            flex-direction: column;
+
+            &-controls {
+                align-self: flex-end;
+            }
+
+            &-row {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 0.72725rem;
+            }
+        }
+
+        &-description {
+            justify-content: space-between;
+
+            &-text {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+    }
+}

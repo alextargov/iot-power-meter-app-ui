@@ -15,6 +15,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
 import { RouterModule } from '@angular/router';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
     exports: [
@@ -35,6 +37,8 @@ import { RouterModule } from '@angular/router';
         MatCardModule,
         MatButtonModule,
         MatBadgeModule,
+        MatExpansionModule,
+        MatSlideToggleModule,
     ],
     imports: [
         CommonModule,
@@ -53,7 +57,9 @@ import { RouterModule } from '@angular/router';
         MatDatepickerModule,
         MatCardModule,
         MatButtonModule,
-        MatBadgeModule
+        MatBadgeModule,
+        MatExpansionModule,
+        MatSlideToggleModule,
     ],
 })
 export class CoreModule {}

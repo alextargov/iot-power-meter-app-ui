@@ -1,0 +1,44 @@
+<mat-expansion-panel class="device--item" [formGroup]="formGroup" (opened)="panelOpenState = true" [expanded]="panelOpenState">
+    <mat-expansion-panel-header>
+        <mat-panel-title *ngIf="device._id">
+            {{ device.name }}
+        </mat-panel-title>
+        <mat-panel-description class="device--item-description">
+            <span class="device--item-description-text">{{ device._id ?  device.description : 'Add a new device'}}</span>
+            <mat-icon
+                *ngIf="device._id"
+                class="device--item-description-icon"
+                [ngClass]="{'device--item-running': device.isRunning, 'device--item-stopped': !device.isRunning }"
+            >
+                {{ device.isRunning ? 'check_circle_outline' : 'highlight_off' }}
+            </mat-icon>
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <div class="device--item-details">
+        <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" (blur)="setDeviceKey()" >
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Key</mat-label>
+            <input matInput formControlName="key">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Description</mat-label>
+            <input matInput formControlName="description">
+        </mat-form-field>
+        <div class="device--item-details-row">
+            <mat-slide-toggle formControlName="isRunning">{{ formGroup?.controls?.isRunning?.value ? 'Running' : 'Not running' }}</mat-slide-toggle>
+            <span *ngIf=" device._id">Updated at: {{ device.updatedAt | date:'medium'}}</span>
+        </div>
+        <div class="device--item-details-controls">
+            <button mat-raised-button (click)="onCancel()" mat-button>Cancel</button>
+            <button mat-raised-button (click)="onSave()" mat-button color="primary">Save</button>
+            <button *ngIf="device._id" mat-raised-button (click)="onDelete()" mat-button color="warn">Delete</button>
+        </div>
+    </div>
+
+</mat-expansion-panel>

@@ -1,0 +1,43 @@
+:host {
+    width: 100%;
+}
+
+.devices {
+    &--wrapper {
+        display: flex;
+        flex: 0 1 auto;
+        flex-wrap: wrap;
+        margin-top: 1.45rem;
+    }
+
+    &--item {
+        width: calc(33.33% - 1.4545rem);
+        flex-basis: unset;
+        flex-grow: unset;
+        margin-bottom: 1.4545rem;
+        align-self: flex-start;
+        flex: 0 0 auto;
+        max-width: 100%;
+        min-width:  0;
+        margin: 0 0.72725rem;
+        border-radius: 0.72725rem !important;
+
+        &-running {
+            color: #00bd56;
+        }
+
+        &-stopped {
+            color: #fa4659;
+        }
+
+        &-description {
+            justify-content: space-between;
+
+            &-text {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+    }
+}

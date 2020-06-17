@@ -17,6 +17,12 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { StatisticsModule } from './modules/statistics/statistics.module';
+import { DevicesModule } from './modules/devices/devices.module';
+import { JwtModule } from '@auth0/angular-jwt';
+
+export const tokenGetter = () => {
+    return localStorage.getItem('access_token');
+}
 
 @NgModule({
     declarations: [
@@ -27,6 +33,11 @@ import { StatisticsModule } from './modules/statistics/statistics.module';
         AppRoutingModule,
         AmChartsModule,
         HttpClientModule,
+        JwtModule.forRoot({
+            config: {
+                tokenGetter,
+            },
+        }),
 
         // Material
         CoreModule,
@@ -35,6 +46,7 @@ import { StatisticsModule } from './modules/statistics/statistics.module';
         SharedModule,
         StatisticsModule,
         AuthModule,
+        DevicesModule,
     ],
     providers: [
         {

@@ -4,12 +4,13 @@
         width: 15rem;
         color: #fff;
         height: 100%;
-        padding: 2rem 1rem;
+        padding: 0 1rem;
         font-size: 1.2rem;
     }
 
     &__menu {
         margin: 0;
+        padding-top: 2rem;
         list-style: none;
 
         &-item {

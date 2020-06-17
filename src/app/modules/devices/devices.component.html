@@ -1,0 +1,13 @@
+<mat-accordion class="devices--wrapper" multi>
+    <app-device
+        class="devices--item"
+        (onDeviceCreate)="appendNewDevice($event)"
+        [device]="{}">
+    </app-device>
+    <app-device
+        *ngFor="let device of devices"
+        class="devices--item"
+        (onDeviceDelete)="removeDevice($event)"
+        [device]="device">
+    </app-device>
+</mat-accordion>
