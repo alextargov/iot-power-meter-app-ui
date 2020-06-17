@@ -23,7 +23,8 @@
             flex-direction: column;
 
             &-controls {
-                align-self: flex-end;
+                display: flex;
+                justify-content: space-between;
             }
 
             &-row {

@@ -35,9 +35,14 @@
             <span *ngIf=" device._id">Updated at: {{ device.updatedAt | date:'medium'}}</span>
         </div>
         <div class="device--item-details-controls">
-            <button mat-raised-button (click)="onCancel()" mat-button>Cancel</button>
-            <button mat-raised-button (click)="onSave()" mat-button color="primary">Save</button>
-            <button *ngIf="device._id" mat-raised-button (click)="onDelete()" mat-button color="warn">Delete</button>
+            <div class="device--item-details-controls-left">
+                <button *ngIf="device._id" mat-raised-button (click)="onDelete()" mat-button color="warn">Delete</button>
+
+            </div>
+            <div class="device--item-details-controls-right">
+                <button mat-raised-button (click)="onCancel()" mat-button>Cancel</button>
+                <button mat-raised-button (click)="onSave()" mat-button color="primary">Save</button>
+            </div>
         </div>
     </div>
 
