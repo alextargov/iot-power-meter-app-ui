@@ -13,8 +13,8 @@ export class ApiService {
         private readonly httpClient: HttpClient,
     ) {}
 
-    public request<T>(path: string, options?: any, fallbackUrl?: string): Observable<T> {
-        options = options || {};
+    public request<T>(path: string, options?: { data?: any, method?: string }, fallbackUrl?: string): Observable<T> {
+        options = options || {} as any;
 
         const method = options.method ? options.method.toUpperCase() : 'GET';
 
