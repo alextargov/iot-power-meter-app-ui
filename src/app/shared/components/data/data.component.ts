@@ -1,5 +1,4 @@
-import { AmChartsService, AmChart } from '@amcharts/amcharts3-angular';
-import { Component, Input, ViewChild, ElementRef, AfterViewInit, OnChanges, OnInit, SimpleChanges, NgZone } from '@angular/core';
+import { Component, Input, ViewChild, AfterViewInit, OnChanges, OnInit, SimpleChanges, NgZone } from '@angular/core';
 
 import { IVoltage } from '../../interfaces/voltage.interface';
 import { ICurrent } from '../../interfaces/current.interface';
@@ -15,7 +14,7 @@ import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 am4core.options.queue = true;
-am4core.options.onlyShowOnViewport = false;
+am4core.options.minPolylineStep = 5;
 am4core.options.animationsEnabled = false;
 
 am4core.useTheme(am4themes_animated);
@@ -67,6 +66,7 @@ export class DataComponent implements OnInit, AfterViewInit, OnChanges {
             const series = chart.series.push(new am4charts.LineSeries());
             series.dataFields.dateX = 'date';
             series.dataFields.valueY = 'value';
+            series.minBulletDistance = 20;
 
             series.tooltipText = '{valueY.value}';
             chart.cursor = new am4charts.XYCursor();
