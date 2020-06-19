@@ -31,7 +31,52 @@ export class DeviceComponent implements OnInit {
             name: new FormControl(this.device.name || '', Validators.required),
             key: new FormControl(this.device.key || '', Validators.required),
             description: new FormControl(this.device.description || '', Validators.required),
-            isRunning: new FormControl(this.device.isRunning || false)
+            isRunning: new FormControl(this.device.isRunning || false),
+            isCurrentAlarmEnabled: new FormControl(this.device.isCurrentAlarmEnabled || false),
+            isVoltageAlarmEnabled: new FormControl(this.device.isVoltageAlarmEnabled || false),
+            isPowerAlarmEnabled: new FormControl(this.device.isPowerAlarmEnabled || false),
+            currentAlarmThreshold: new FormControl({
+                value: this.device.currentAlarmThreshold,
+                disabled: !this.device.isCurrentAlarmEnabled
+            }),
+            voltageAlarmThreshold: new FormControl({
+                value: this.device.voltageAlarmThreshold,
+                disabled: !this.device.isVoltageAlarmEnabled
+            }),
+            powerAlarmThreshold: new FormControl({
+                value: this.device.powerAlarmThreshold,
+                disabled: !this.device.isPowerAlarmEnabled
+            }),
+        });
+
+        this.formGroup.get('isCurrentAlarmEnabled').valueChanges.subscribe((isEnabled) => {
+            if (isEnabled) {
+                this.formGroup.get('currentAlarmThreshold').enable();
+
+            } else {
+                this.formGroup.get('currentAlarmThreshold').disable();
+                this.formGroup.get('currentAlarmThreshold').setValue(null)
+            }
+        });
+
+        this.formGroup.get('isVoltageAlarmEnabled').valueChanges.subscribe((isEnabled) => {
+            if (isEnabled) {
+                this.formGroup.get('voltageAlarmThreshold').enable();
+
+            } else {
+                this.formGroup.get('voltageAlarmThreshold').disable();
+                this.formGroup.get('voltageAlarmThreshold').setValue(null)
+            }
+        });
+
+        this.formGroup.get('isPowerAlarmEnabled').valueChanges.subscribe((isEnabled) => {
+            if (isEnabled) {
+                this.formGroup.get('powerAlarmThreshold').enable();
+
+            } else {
+                this.formGroup.get('powerAlarmThreshold').disable();
+                this.formGroup.get('powerAlarmThreshold').setValue(null)
+            }
         });
 
         if (this.device._id) {

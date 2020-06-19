@@ -1,0 +1,40 @@
+<h1 mat-dialog-title>User Data</h1>
+<div
+    class="user-modal--content"
+    mat-dialog-content
+    [formGroup]="form">
+    <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input
+            formControlName="username"
+            matInput
+            placeholder="Type your username"
+        >
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input
+            formControlName="password"
+            matInput
+            placeholder="Type your password"
+        >
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>New Password</mat-label>
+        <input
+            formControlName="newPassword"
+            matInput
+            placeholder="Type your new password"
+        >
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Close</button>
+    <button
+        (click)="save()"
+        mat-raised-button
+        color="primary"
+    >Save</button>
+</div>

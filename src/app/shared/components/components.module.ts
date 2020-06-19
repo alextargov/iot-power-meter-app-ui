@@ -10,6 +10,7 @@ import { HeaderComponent } from './header/header.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { RouterModule } from '@angular/router';
 import { DeviceComponent } from './device/device.component';
+import { UserModalComponent } from './user-modal/user-modal.component';
 
 @NgModule({
     imports: [
@@ -25,6 +26,7 @@ import { DeviceComponent } from './device/device.component';
         HeaderComponent,
         NavigationComponent,
         DeviceComponent,
+        UserModalComponent,
     ],
     exports: [
         ConsumptionComponent,
@@ -35,6 +37,7 @@ import { DeviceComponent } from './device/device.component';
         HeaderComponent,
         NavigationComponent,
         DeviceComponent,
+        UserModalComponent,
     ],
     entryComponents: [
         TimeFrameComponent,
