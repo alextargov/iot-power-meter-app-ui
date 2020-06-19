@@ -18,6 +18,12 @@
             color: #fa4659;
         }
 
+        &-alarm {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
         &-details {
             display: flex;
             flex-direction: column;

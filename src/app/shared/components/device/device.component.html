@@ -30,6 +30,27 @@
             <mat-label>Description</mat-label>
             <input matInput formControlName="description">
         </mat-form-field>
+        <div class="device--item-alarm">
+            <mat-slide-toggle formControlName="isCurrentAlarmEnabled" name="current alarm enabled">Enable current alarm</mat-slide-toggle>
+            <mat-form-field>
+                <mat-label>Current Alarm Threshold</mat-label>
+                <input type="number" matInput formControlName="currentAlarmThreshold">
+            </mat-form-field>
+        </div>
+        <div class="device--item-alarm">
+            <mat-slide-toggle formControlName="isVoltageAlarmEnabled" name="voltage alarm enabled">Enable voltage alarm</mat-slide-toggle>
+            <mat-form-field>
+                <mat-label>Voltage Alarm Threshold</mat-label>
+                <input type="number" matInput formControlName="voltageAlarmThreshold">
+            </mat-form-field>
+        </div>
+        <div class="device--item-alarm">
+            <mat-slide-toggle formControlName="isPowerAlarmEnabled" name="power alarm enabled">Enable power alarm</mat-slide-toggle>
+            <mat-form-field>
+                <mat-label>Power Alarm Threshold</mat-label>
+                <input type="number" matInput formControlName="powerAlarmThreshold">
+            </mat-form-field>
+        </div>
         <div class="device--item-details-row">
             <mat-slide-toggle formControlName="isRunning">{{ formGroup?.controls?.isRunning?.value ? 'Running' : 'Not running' }}</mat-slide-toggle>
             <span *ngIf=" device._id">Updated at: {{ device.updatedAt | date:'medium'}}</span>

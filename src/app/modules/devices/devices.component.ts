@@ -26,11 +26,13 @@ export class DevicesComponent extends SubscribedComponent implements OnInit {
     public ngOnInit(): void {
         this.user = this.authService.getUser();
 
-        this.deviceService.getDeviceByUserId(this.user._id)
-            .pipe(takeUntil(this.componentDestroyed$))
-            .subscribe((devices) => {
-                this.devices = devices;
-            });
+        if (this.user) {
+            this.deviceService.getDeviceByUserId(this.user._id)
+                .pipe(takeUntil(this.componentDestroyed$))
+                .subscribe((devices) => {
+                    this.devices = devices;
+                });
+        }
     }
 
     public appendNewDevice(device: IDevice): void {

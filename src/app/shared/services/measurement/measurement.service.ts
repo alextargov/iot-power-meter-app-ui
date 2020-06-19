@@ -15,14 +15,18 @@ export class MeasurementService  {
         return this.apiService.request(this.route, { data: timeFrame });
     }
 
-    public getApplianceMeasurements(appliance: string): Observable<[]> {
-        return this.apiService.request(`${this.route}/${appliance}`);
+    public getDeviceMeasurements(timeFrame, device: string): Observable<[]> {
+        return this.apiService.request(`${this.route}/${device}`, {
+            data: {
+                timeFrame,
+            }
+        });
     }
 
     public createMeasurement(measurementData: IMeasurement): Observable<IMeasurement> {
         return this.apiService.request(`${this.route}`, {
             method: 'post',
-            measurementData
+            data: measurementData
         });
     }
 }
