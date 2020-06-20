@@ -30,4 +30,8 @@ export class UserModalComponent implements OnInit {
             newPassword: new FormControl(),
         });
     }
+
+    public save(): void {
+
+    }
 }

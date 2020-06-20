@@ -17,6 +17,8 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { RouterModule } from '@angular/router';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
     exports: [
@@ -28,6 +30,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
         MatIconModule,
         MatInputModule,
         MatSortModule,
+        MatPaginatorModule,
         MatTableModule,
         MatSelectModule,
         ReactiveFormsModule,
@@ -39,6 +42,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
         MatBadgeModule,
         MatExpansionModule,
         MatSlideToggleModule,
+        MatDialogModule,
     ],
     imports: [
         CommonModule,
@@ -49,6 +53,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
         MatIconModule,
         MatInputModule,
         MatSortModule,
+        MatPaginatorModule,
         MatTableModule,
         MatSelectModule,
         ReactiveFormsModule,
@@ -60,6 +65,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
         MatBadgeModule,
         MatExpansionModule,
         MatSlideToggleModule,
+        MatDialogModule,
     ],
 })
 export class CoreModule {}

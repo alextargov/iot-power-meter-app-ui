@@ -7,8 +7,9 @@
             class="header__right-icon"
             aria-hidden="false"
             aria-label="Example home icon"
-            matBadge="15"
+            [matBadge]="notReadAlarms"
             matBadgeColor="warn"
+            (click)="openAlarmsModal()"
         >mail</mat-icon>
         <mat-icon
             class="header__right-icon"

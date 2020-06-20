@@ -11,11 +11,14 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { RouterModule } from '@angular/router';
 import { DeviceComponent } from './device/device.component';
 import { UserModalComponent } from './user-modal/user-modal.component';
+import { AlarmsModalComponent } from './alarms-modal/alarms-modal.component';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
     imports: [
         CoreModule,
-        RouterModule
+        RouterModule,
+        MatTableModule,
     ],
     declarations: [
         ConsumptionComponent,
@@ -27,6 +30,7 @@ import { UserModalComponent } from './user-modal/user-modal.component';
         NavigationComponent,
         DeviceComponent,
         UserModalComponent,
+        AlarmsModalComponent,
     ],
     exports: [
         ConsumptionComponent,
@@ -38,6 +42,7 @@ import { UserModalComponent } from './user-modal/user-modal.component';
         NavigationComponent,
         DeviceComponent,
         UserModalComponent,
+        AlarmsModalComponent,
     ],
     entryComponents: [
         TimeFrameComponent,

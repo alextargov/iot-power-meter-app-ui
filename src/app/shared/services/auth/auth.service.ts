@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { ApiService } from '../api/api.service';
-import { IUser } from './user.interface';
+import { IUser, IUserAlarm } from './user.interface';
 
 @Injectable()
 export class AuthService  {
@@ -41,5 +41,25 @@ export class AuthService  {
         }
 
         return this.jwtService.decodeToken(token);
+    }
+
+    public getUserAlarms(): Observable<IUserAlarm[]> {
+        const user = this.getUser();
+
+        if (!user) {
+            return of([]);
+        }
+
+        return this.apiService.request(`${this.route}/${user._id}/alarms`, { method: 'get' });
+    }
+
+    public markUserAlarmAsRead(): Observable<IUserAlarm[]> {
+        const user = this.getUser();
+
+        if (!user) {
+            return of([]);
+        }
+
+        return this.apiService.request(`${this.route}/${user._id}/alarms/read`, { method: 'post' });
     }
 }

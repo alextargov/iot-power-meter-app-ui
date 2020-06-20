@@ -1,0 +1,24 @@
+.alarms-modal {
+    &--content {
+        display: flex;
+        flex-direction: column;
+        margin-top: 1rem;
+
+        &-table {
+            width: 100%;
+
+            &-row {
+                height: fit-content;
+
+                &-unread {
+                    background-color: rgba(71,128,255, 0.2)
+                }
+            }
+
+            &-data {
+                padding: 0.72725rem 0.3636rem !important;
+                font-size: 0.8rem;
+            }
+        }
+    }
+}

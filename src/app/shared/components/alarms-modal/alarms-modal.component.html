@@ -1,0 +1,42 @@
+<h1 mat-dialog-title>Alarms</h1>
+<div class="alarms-modal--content" mat-dialog-content>
+
+    <div>
+        <table class="alarms-modal--content-table" mat-table [dataSource]="dataSource" matSort matSortActive="createdAt" matSortDirection="desc">
+
+            <ng-container matColumnDef="type">
+                <th class="alarms-modal--content-table-data" mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+                <td class="alarms-modal--content-table-data" mat-cell *matCellDef="let row"> {{row.type}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="device">
+                <th class="alarms-modal--content-table-data" mat-header-cell *matHeaderCellDef mat-sort-header> Device </th>
+                <td class="alarms-modal--content-table-data" mat-cell *matCellDef="let row"> {{row.device}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="threshold">
+                <th class="alarms-modal--content-table-data" mat-header-cell *matHeaderCellDef mat-sort-header> Threshold </th>
+                <td class="alarms-modal--content-table-data" mat-cell *matCellDef="let row"> {{row.threshold }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="value">
+                <th class="alarms-modal--content-table-data" mat-header-cell *matHeaderCellDef mat-sort-header> Value </th>
+                <td class="alarms-modal--content-table-data" mat-cell *matCellDef="let row"> {{row.value }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="createdAt">
+                <th class="alarms-modal--content-table-data" mat-header-cell *matHeaderCellDef mat-sort-header> Created at </th>
+                <td class="alarms-modal--content-table-data" mat-cell *matCellDef="let row"> {{row.createdAt | date:'medium'}}</td>
+            </ng-container>
+
+            <tr class="alarms-modal--content-table-row" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr [ngClass]="{'alarms-modal--content-table-row-unread': !row.read }"class="alarms-modal--content-table-row" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator pageSize="10" [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+    </div>
+
+</div>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Close</button>
+    <button (click)="clearAlarmNotifications()" mat-dialog-close mat-raised-button color="primary">Clear alarms</button>
+</div>
