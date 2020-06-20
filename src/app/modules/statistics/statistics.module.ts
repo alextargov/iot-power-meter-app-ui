@@ -4,6 +4,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { StatisticsComponent } from './statistics.component';
 import { StatisticsRoutingModule } from './statistics-routing.module';
 import { CommonModule } from '@angular/common';
+import { CoreModule } from '../../core/core.module';
 
 @NgModule({
     declarations: [
@@ -13,7 +14,7 @@ import { CommonModule } from '@angular/common';
         StatisticsComponent
     ],
     imports: [
-        CommonModule,
+        CoreModule,
         SharedModule,
         StatisticsRoutingModule
     ]
