@@ -2,6 +2,8 @@ export interface IDevice {
     _id?: string;
     userId: string;
     name: string;
+    deviceId: string;
+    host: string;
     key: string;
     description: string;
     isRunning: boolean;

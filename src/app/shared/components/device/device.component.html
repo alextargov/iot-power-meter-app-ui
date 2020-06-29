@@ -16,19 +16,34 @@
     </mat-expansion-panel-header>
 
     <div class="device--item-details">
-        <mat-form-field>
-            <mat-label>Name</mat-label>
-            <input matInput formControlName="name" (blur)="setDeviceKey()" >
+        <div class="device--item-details-identification">
+            <mat-form-field class="device--item-details-identification-first">
+                <mat-label>Name*</mat-label>
+                <input matInput formControlName="name" (blur)="setDeviceKey()" >
+                <mat-error *ngIf="formGroup?.get('name')?.errors?.required">Name is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="device--item-details-identification-second">
+                <mat-label>Key*</mat-label>
+                <input matInput formControlName="key">
+                <mat-error *ngIf="formGroup?.get('key')?.errors?.required">Key is required</mat-error>
+            </mat-form-field>
+        </div>
+        <mat-form-field class="device--item-details-communication-first">
+            <mat-label>Host*</mat-label>
+            <input matInput formControlName="host">
+            <mat-error *ngIf="formGroup?.get('host')?.errors?.required">Host is required</mat-error>
         </mat-form-field>
 
-        <mat-form-field>
-            <mat-label>Key</mat-label>
-            <input matInput formControlName="key">
+        <mat-form-field class="device--item-details-communication-second">
+            <mat-label>ID*</mat-label>
+            <input matInput formControlName="deviceId">
+            <mat-error *ngIf="formGroup?.get('deviceId')?.errors?.required">ID is required</mat-error>
         </mat-form-field>
-
         <mat-form-field>
-            <mat-label>Description</mat-label>
+            <mat-label>Description*</mat-label>
             <input matInput formControlName="description">
+            <mat-error *ngIf="formGroup?.get('description')?.errors?.required">Description is required</mat-error>
         </mat-form-field>
         <div class="device--item-alarm">
             <mat-slide-toggle formControlName="isCurrentAlarmEnabled" name="current alarm enabled">Enable current alarm</mat-slide-toggle>
@@ -62,7 +77,7 @@
             </div>
             <div class="device--item-details-controls-right">
                 <button mat-raised-button (click)="onCancel()" mat-button>Cancel</button>
-                <button mat-raised-button (click)="onSave()" mat-button color="primary">Save</button>
+                <button [disabled]="formGroup.invalid" mat-raised-button (click)="onSave()" mat-button color="primary">Save</button>
             </div>
         </div>
     </div>

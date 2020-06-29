@@ -9,6 +9,7 @@
         max-width: 100%;
         min-width:  0;
         border-radius: 0.72725rem !important;
+        margin-top: 0 !important;
 
         &-running {
             color: #00bd56;
@@ -27,6 +28,16 @@
         &-details {
             display: flex;
             flex-direction: column;
+
+            &-identification {
+                display: flex;
+                justify-content: space-between;
+
+                &-first,
+                &-second {
+                    width: 45%;
+                }
+            }
 
             &-controls {
                 display: flex;

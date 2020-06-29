@@ -2,9 +2,11 @@ import { Component, OnInit, Input, ViewChild, Output, EventEmitter} from '@angul
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatAccordion } from '@angular/material/expansion';
 import slugify from 'slugify';
+import { v4 as uuid4 } from 'uuid';
 
 import { IDevice } from '../../services/device/device.interface';
 import { DeviceService } from '../../services/device/device.service';
+import { defaultDeviceHost } from '../../constants/device.constant';
 
 @Component({
     selector: 'app-device',
@@ -27,27 +29,7 @@ export class DeviceComponent implements OnInit {
     ) {}
 
     public ngOnInit(): void {
-        this.formGroup = this.formBuilder.group({
-            name: new FormControl(this.device.name || '', Validators.required),
-            key: new FormControl(this.device.key || '', Validators.required),
-            description: new FormControl(this.device.description || '', Validators.required),
-            isRunning: new FormControl(this.device.isRunning || false),
-            isCurrentAlarmEnabled: new FormControl(this.device.isCurrentAlarmEnabled || false),
-            isVoltageAlarmEnabled: new FormControl(this.device.isVoltageAlarmEnabled || false),
-            isPowerAlarmEnabled: new FormControl(this.device.isPowerAlarmEnabled || false),
-            currentAlarmThreshold: new FormControl({
-                value: this.device.currentAlarmThreshold,
-                disabled: !this.device.isCurrentAlarmEnabled
-            }),
-            voltageAlarmThreshold: new FormControl({
-                value: this.device.voltageAlarmThreshold,
-                disabled: !this.device.isVoltageAlarmEnabled
-            }),
-            powerAlarmThreshold: new FormControl({
-                value: this.device.powerAlarmThreshold,
-                disabled: !this.device.isPowerAlarmEnabled
-            }),
-        });
+        this.initializeForm();
 
         this.formGroup.get('isCurrentAlarmEnabled').valueChanges.subscribe((isEnabled) => {
             if (isEnabled) {
@@ -127,6 +109,7 @@ export class DeviceComponent implements OnInit {
 
     private resetDevice(): void {
         this.formGroup.reset(this.device);
+        this.initializeForm();
         this.panelOpenState = false;
     }
 
@@ -135,6 +118,35 @@ export class DeviceComponent implements OnInit {
             replacement: '-',
             remove: removeCriteria,
             lower: true,
+        });
+    }
+
+    private initializeForm(): void {
+        this.formGroup = this.formBuilder.group({
+            name: new FormControl(this.device.name || '', Validators.required),
+            key: new FormControl(this.device.key || '', Validators.required),
+            deviceId: new FormControl({
+                value: this.device.deviceId || uuid4(),
+                disabled: true
+            }, Validators.required),
+            host: new FormControl(this.device.host || defaultDeviceHost, Validators.required),
+            description: new FormControl(this.device.description || '', Validators.required),
+            isRunning: new FormControl(this.device.isRunning || false),
+            isCurrentAlarmEnabled: new FormControl(this.device.isCurrentAlarmEnabled || false),
+            isVoltageAlarmEnabled: new FormControl(this.device.isVoltageAlarmEnabled || false),
+            isPowerAlarmEnabled: new FormControl(this.device.isPowerAlarmEnabled || false),
+            currentAlarmThreshold: new FormControl({
+                value: this.device.currentAlarmThreshold,
+                disabled: !this.device.isCurrentAlarmEnabled
+            }),
+            voltageAlarmThreshold: new FormControl({
+                value: this.device.voltageAlarmThreshold,
+                disabled: !this.device.isVoltageAlarmEnabled
+            }),
+            powerAlarmThreshold: new FormControl({
+                value: this.device.powerAlarmThreshold,
+                disabled: !this.device.isPowerAlarmEnabled
+            }),
         });
     }
 }
