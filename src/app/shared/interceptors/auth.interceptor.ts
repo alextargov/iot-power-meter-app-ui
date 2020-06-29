@@ -5,7 +5,6 @@ import { Observable, of as observableOf } from 'rxjs';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
     private readonly headerAuthorizationName = 'Authorization';
-    private readonly headerTokenName = 'token';
     private readonly authScheme = 'Bearer';
 
     public intercept(req: HttpRequest<any>, next: HttpHandler): Observable <HttpEvent<any>> {
@@ -21,7 +20,6 @@ export class AuthInterceptor implements HttpInterceptor {
         req = req.clone({
             setHeaders: {
                 [this.headerAuthorizationName]: `${this.authScheme} ${token}`,
-                [this.headerTokenName]: `${token}`,
             }
         });
         return next.handle(req);
