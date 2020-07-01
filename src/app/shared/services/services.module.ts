@@ -9,6 +9,8 @@ import { ChartService } from './chart/chart.service';
 import { AuthService } from './auth/auth.service';
 import { DeviceService } from './device/device.service';
 import { SocketService } from './socket/socket.service';
+import { BroadcasterService } from './broadcaster/broadcaster.service';
+import { LoadingOverlayService } from './loading-overlay/loading-overlay.service';
 
 @NgModule({
     providers: [
@@ -21,6 +23,8 @@ import { SocketService } from './socket/socket.service';
         AuthService,
         DeviceService,
         SocketService,
+        BroadcasterService,
+        LoadingOverlayService,
     ],
 })
 export class ServicesModule {}

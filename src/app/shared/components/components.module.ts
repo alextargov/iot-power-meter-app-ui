@@ -13,12 +13,17 @@ import { DeviceComponent } from './device/device.component';
 import { UserModalComponent } from './user-modal/user-modal.component';
 import { AlarmsModalComponent } from './alarms-modal/alarms-modal.component';
 import { MatTableModule } from '@angular/material/table';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { LoadingOverlayComponent } from './loading-overlay/loading-overlay.component';
 
 @NgModule({
     imports: [
         CoreModule,
         RouterModule,
         MatTableModule,
+        NgxMaterialTimepickerModule,
+        MatProgressSpinnerModule,
     ],
     declarations: [
         ConsumptionComponent,
@@ -31,6 +36,7 @@ import { MatTableModule } from '@angular/material/table';
         DeviceComponent,
         UserModalComponent,
         AlarmsModalComponent,
+        LoadingOverlayComponent
     ],
     exports: [
         ConsumptionComponent,
@@ -43,6 +49,7 @@ import { MatTableModule } from '@angular/material/table';
         DeviceComponent,
         UserModalComponent,
         AlarmsModalComponent,
+        LoadingOverlayComponent,
     ],
     entryComponents: [
         TimeFrameComponent,

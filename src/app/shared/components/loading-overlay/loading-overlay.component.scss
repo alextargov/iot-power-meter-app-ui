@@ -1,0 +1,17 @@
+
+.loading-overlay {
+    &__container {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.80);
+        z-index: 9999;
+
+        &--visible {
+            display: flex;
+        }
+    }
+}
