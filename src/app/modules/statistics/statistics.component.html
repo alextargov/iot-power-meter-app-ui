@@ -1,18 +1,18 @@
 <header class="statistics--options">
-    <app-time-frame (timeFrameChangeEmitter)="onTimeFrameChange($event)"></app-time-frame>
     <mat-form-field>
         <mat-label>Select device</mat-label>
         <mat-select
-            [(ngModel)]="selectedDevice"
+            [(value)]="selectedDevice"
             name="device"
             (selectionChange)="onDeviceChange($event)"
         >
-            <mat-option [value]="null">All</mat-option>
-            <mat-option *ngFor="let device of devices" [value]="device.name">
+            <mat-option [value]="allDevicesSelected">All</mat-option>
+            <mat-option *ngFor="let device of devices" [value]="device.deviceId">
                 {{ device.name }}
             </mat-option>
         </mat-select>
     </mat-form-field>
+    <app-time-frame (timeFrameChangeEmitter)="onTimeFrameChange($event)"></app-time-frame>
 </header>
 
 <div class="electricity-graphs">

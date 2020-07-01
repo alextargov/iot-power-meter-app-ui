@@ -13,17 +13,17 @@
 
     &--datepickers {
         display: flex;
-    }
 
-    &--label {
-        margin-right: 2rem;
-    }
-
-    &--radio-group {
-        display: flex;
-
-        &-item {
-            margin: 0 1rem;
+        &-icon {
+            cursor: pointer;
         }
+
+        &-time-start {
+            margin-right: 1rem;
+        }
+    }
+
+    &--selector {
+        margin-right: 1rem;
     }
 }

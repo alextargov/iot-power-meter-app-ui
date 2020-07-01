@@ -1,6 +1,17 @@
 <div class="time-frame--wrapper row">
-    <label class="time-frame--label" id="time-frame--label">Select time frame</label>
-    <mat-radio-group
+    <mat-form-field class="time-frame--selector">
+        <mat-label>Select time frame</mat-label>
+        <mat-select
+            [(ngModel)]="selected"
+            name="timeFrame"
+            (selectionChange)="onTimeFrameChange($event)"
+        >
+            <mat-option *ngFor="let timeFrame of timeFrames" [value]="timeFrame.frame">
+                {{timeFrame.name}}
+            </mat-option>
+        </mat-select>
+      </mat-form-field>
+    <!-- <mat-radio-group
         aria-labelledby="time-frame--label"
         class="time-frame--radio-group"
         (change)="onTimeFrameChange($event)"
@@ -13,12 +24,12 @@
         >
             {{timeFrame.name}}
         </mat-radio-button>
-    </mat-radio-group>
+    </mat-radio-group> -->
 
     <div *ngIf="selected === 'custom'" class="time-frame--datepickers">
         <mat-form-field>
             <mat-label>Choose a start date</mat-label>
-            <input disabled matInput ngModel (ngModelChange)="datePickerStartChange($event)" [matDatepicker]="pickerStart">
+            <input matInput ngModel (ngModelChange)="datePickerStartChange($event)" [matDatepicker]="pickerStart">
             <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
             <mat-datepicker [disabled]="selected !== 'custom'" #pickerStart></mat-datepicker>
         </mat-form-field>
@@ -30,5 +41,40 @@
             <mat-datepicker [disabled]="selected !== 'custom'" #pickerEnd></mat-datepicker>
         </mat-form-field>
     </div>
+
+    <div *ngIf="selected === 'today-subset'" class="time-frame--datepickers">
+        <mat-form-field class="time-frame--datepickers-time-start">
+            <input
+                placeholder="Min time"
+                [ngxTimepicker]="min"
+                [min]="timeMin"
+                [max]="timeEnd"
+                matInput
+                [format]="24"
+                readonly
+                [(ngModel)]="timeStart"
+                (ngModelChange)="getTimeMaxRestriction()"
+            >
+            <ngx-material-timepicker [disableAnimation]="true" #min></ngx-material-timepicker>
+            <mat-icon class="time-frame--datepickers-icon" matSuffix (click)="clearTimeStart()">close</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field>
+            <input
+                placeholder="Max time"
+                [ngxTimepicker]="max"
+                [max]="timeMax"
+                [min]="timeStart"
+                matInput
+                [format]="24"
+                readonly
+                [(ngModel)]="timeEnd"
+                (ngModelChange)="getTimeMinRestriction()"
+            >
+            <ngx-material-timepicker [disableAnimation]="true" #max></ngx-material-timepicker>
+            <mat-icon class="time-frame--datepickers-icon" matSuffix (click)="clearTimeEnd()">close</mat-icon>
+        </mat-form-field>
+    </div>
+
 </div>
 
