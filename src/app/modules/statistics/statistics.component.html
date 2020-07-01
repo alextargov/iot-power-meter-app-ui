@@ -17,20 +17,20 @@
 
 <div class="electricity-graphs">
     <app-current
-        *ngIf="currentData.length"
+        *ngIf="currentData"
         class="electricity-graphs--current card"
         [timeFrame]="timeFrame"
         [data]="currentData">
     </app-current>
     <app-voltage
-        *ngIf="voltageData.length"
+        *ngIf="voltageData"
         class="electricity-graphs--voltage card"
         [timeFrame]="timeFrame"
         [data]="voltageData">
     </app-voltage>
 </div>
 <app-consumption
-        *ngIf="consumptionData.length"
+        *ngIf="consumptionData"
         class="consumption-graph card"
         [timeFrame]="timeFrame"
         [data]="consumptionData">
