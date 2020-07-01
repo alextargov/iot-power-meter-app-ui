@@ -78,7 +78,6 @@ export class StatisticsComponent extends SubscribedComponent implements OnInit, 
             .pipe(takeUntil(this.componentDestroyed$))
             .subscribe((chartId) => {
                 this.renderedCharts.add(chartId);
-                console.log(chartId, this.renderedCharts.size);
 
                 if (this.renderedCharts.size >= 3) {
                     this.loadingOverlayService.hide();
