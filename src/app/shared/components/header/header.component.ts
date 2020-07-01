@@ -45,14 +45,6 @@ export class HeaderComponent extends SubscribedComponent implements OnInit {
                     this.alarmModalRef.componentInstance.ngOnInit();
                 }
             });
-
-            setTimeout(() => this.measurementService.createMeasurement({
-                current: 1.8,
-                voltage: 232,
-                power: 1.8 * 250,
-                createdAt: new Date().getTime(),
-                appliance: 'main',
-            }).subscribe(), 5000);
     }
 
     public openUserModal(): void {
