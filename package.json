@@ -8,6 +8,7 @@
   "scripts": {
     "lint": "tslint -p \"tsconfig.json\" \"./src/**/*.ts\" -t verbose",
     "start:dev": "ng serve",
+    "build": "ng build",
     "test": "jest"
   },
   "repository": {
