@@ -5,6 +5,7 @@ import { SubscribedComponent } from '../../shared/components/subscribed/subscrib
 import { DeviceService } from '../../shared/services/device/device.service';
 import { IUser } from '../../shared/services/auth/user.interface';
 import { takeUntil } from 'rxjs/operators';
+import { LoadingOverlayService } from '../../shared/services/loading-overlay/loading-overlay.service';
 
 @Component({
     selector: 'app-devices',
@@ -19,11 +20,14 @@ export class DevicesComponent extends SubscribedComponent implements OnInit {
     constructor(
         private readonly authService: AuthService,
         private readonly deviceService: DeviceService,
+        private readonly loadingOverlayService: LoadingOverlayService,
     ) {
         super();
     }
 
     public ngOnInit(): void {
+        this.loadingOverlayService.show();
+
         this.user = this.authService.getUser();
 
         if (this.user) {
@@ -31,6 +35,9 @@ export class DevicesComponent extends SubscribedComponent implements OnInit {
                 .pipe(takeUntil(this.componentDestroyed$))
                 .subscribe((devices) => {
                     this.devices = devices;
+                    setTimeout(() => {
+                        this.loadingOverlayService.hide();
+                    }, 300);
                 });
         }
     }

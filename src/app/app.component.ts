@@ -5,6 +5,7 @@ import { SocketService } from './shared/services/socket/socket.service';
 import { SocketEvent } from './shared/constants/socket.constant';
 import { BroadcasterService } from './shared/services/broadcaster/broadcaster.service';
 import { broadcasterEvents } from './shared/constants/broadcaster-event.constants';
+import { LoadingOverlayService } from './shared/services/loading-overlay/loading-overlay.service';
 
 @Component({
     selector: 'app-root',
@@ -18,7 +19,7 @@ export class AppComponent implements OnInit {
     constructor(
         private readonly authService: AuthService,
         private readonly socketService: SocketService,
-        private readonly broadcaster: BroadcasterService,
+        private readonly loadingOverlayService: LoadingOverlayService,
     ) { }
 
     public ngOnInit(): void {
@@ -27,7 +28,10 @@ export class AppComponent implements OnInit {
 
         this.socketService.onEvent(SocketEvent.CONNECT)
             .subscribe(() => {
-                this.socketService.send(SocketEvent.AUTH, this.authService.getUser()._id)
+                const user = this.authService.getUser();
+                if (user) {
+                    this.socketService.send(SocketEvent.AUTH, user._id)
+                }
             });
 
         this.socketService.onEvent(SocketEvent.DISCONNECT)
@@ -35,6 +39,6 @@ export class AppComponent implements OnInit {
                 console.log('disconnected');
             });
 
-        this.broadcaster.broadcast(broadcasterEvents.loadingOverlayState, true);
+        this.loadingOverlayService.show();
     }
 }

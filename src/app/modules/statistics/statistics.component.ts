@@ -51,7 +51,7 @@ export class StatisticsComponent extends SubscribedComponent implements OnInit, 
         this.job = new CronJob('*/5 * * * * *', () => {
             const lastData = this.voltageData.length ? this.voltageData[this.voltageData.length - 1].date : new Date();
             const timeFrameObject = {
-                frame: TimeFrames.custom,
+                frame: TimeFrames.todayLive,
                 startDate: moment(lastData).subtract(moment().utcOffset(), 'minutes').add(1, 'second').toDate(),
                 endDate: moment().endOf('day').toDate(),
                 wholeDay: false
@@ -65,7 +65,7 @@ export class StatisticsComponent extends SubscribedComponent implements OnInit, 
 
     public ngOnInit(): void {
         this.user = this.authService.getUser();
-
+        this.loadingOverlayService.show();
         if (this.user) {
             this.deviceService.getDeviceByUserId(this.user._id)
                 .pipe(takeUntil(this.componentDestroyed$))
@@ -95,6 +95,7 @@ export class StatisticsComponent extends SubscribedComponent implements OnInit, 
         if (this.timeFrame.frame === TimeFrames.todayLive) {
             this.job.start();
         } else {
+            this.loadingOverlayService.show();
             this.job.stop();
         }
 
