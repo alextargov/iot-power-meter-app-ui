@@ -29,7 +29,6 @@ export class ScheduledControlModalComponent implements OnInit {
     }
 
     public deleteControl(index: number): void {
-        console.log('index', index);
         (this.form.get('scheduledControls') as FormArray).removeAt(index);
     }
 

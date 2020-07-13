@@ -68,7 +68,6 @@ export class HeaderComponent extends SubscribedComponent implements OnInit {
                 takeUntil(this.componentDestroyed$),
             )
             .subscribe((newAlarms) => {
-                console.log(newAlarms);
                 this.setAlarms(newAlarms);
                 this.alarmModalRef.componentInstance.userAlarms = newAlarms;
                 this.alarmModalRef.componentInstance.ngOnInit();
