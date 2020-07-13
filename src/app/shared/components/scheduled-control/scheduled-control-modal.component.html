@@ -1,0 +1,43 @@
+<h1 class="scheduled-control-modal--header" mat-dialog-title>Scheduled control </h1>
+<div [formGroup]="form" class="scheduled-control-modal--content" mat-dialog-content *ngIf="scheduledControls">
+    <div
+        formArrayName="scheduledControls"
+        *ngFor="let scheduledControl of form.get('scheduledControls').value; let i = index">
+        <div [formGroupName]="i" class="scheduled-control-modal--content-row">
+            <mat-form-field class="scheduled-control-modal--content-input">
+                <mat-label>Start date</mat-label>
+                <input matInput formControlName="startDate">
+            </mat-form-field>
+
+            <mat-form-field class="scheduled-control-modal--content-input">
+                <input
+                    placeholder="Start time"
+                    matInput
+                    readonly
+                    formControlName="startTime"
+                >
+            </mat-form-field>
+
+            <mat-form-field class="scheduled-control-modal--content-input">
+                <mat-label>End date</mat-label>
+                <input formControlName="endDate" matInput >
+            </mat-form-field>
+
+            <mat-form-field class="scheduled-control-modal--content-input">
+                <input
+                    placeholder="End time"
+                    matInput
+                    readonly
+                    formControlName="endTime"
+                >
+            </mat-form-field>
+            <!-- <button mat-icon-button (click)="deleteControl(i)" aria-label="Delete">
+                <mat-icon>delete</mat-icon>
+              </button> -->
+            <mat-icon aria-hidden="true" (click)="deleteControl(i)">delete</mat-icon>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="form.get('scheduledControls').value">OK</button>
+</div>

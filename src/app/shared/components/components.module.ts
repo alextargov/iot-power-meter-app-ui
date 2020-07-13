@@ -15,12 +15,16 @@ import { AlarmsModalComponent } from './alarms-modal/alarms-modal.component';
 import { MatTableModule } from '@angular/material/table';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { LoadingOverlayComponent } from './loading-overlay/loading-overlay.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ScheduledControlModalComponent } from './scheduled-control/scheduled-control-modal.component';
+import { ScheduledControlTimeFrameComponent } from './scheduled-control-time-frame/scheduled-control-time-frame.component';
 
 @NgModule({
     imports: [
         CoreModule,
         RouterModule,
         MatTableModule,
+        MatTooltipModule,
         NgxMaterialTimepickerModule,
     ],
     declarations: [
@@ -34,7 +38,9 @@ import { LoadingOverlayComponent } from './loading-overlay/loading-overlay.compo
         DeviceComponent,
         UserModalComponent,
         AlarmsModalComponent,
-        LoadingOverlayComponent
+        LoadingOverlayComponent,
+        ScheduledControlModalComponent,
+        ScheduledControlTimeFrameComponent
     ],
     exports: [
         ConsumptionComponent,
@@ -48,6 +54,8 @@ import { LoadingOverlayComponent } from './loading-overlay/loading-overlay.compo
         UserModalComponent,
         AlarmsModalComponent,
         LoadingOverlayComponent,
+        ScheduledControlModalComponent,
+        ScheduledControlTimeFrameComponent
     ],
     entryComponents: [
         TimeFrameComponent,

@@ -1,12 +1,17 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter} from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
 import { MatAccordion } from '@angular/material/expansion';
 import slugify from 'slugify';
 import { v4 as uuid4 } from 'uuid';
 
-import { IDevice } from '../../services/device/device.interface';
+import { IDevice, IScheduledControl } from '../../services/device/device.interface';
 import { DeviceService } from '../../services/device/device.service';
 import { defaultDeviceHost } from '../../constants/device.constant';
+import { MatDialog } from '@angular/material/dialog';
+import { ScheduledControlModalComponent } from '../scheduled-control/scheduled-control-modal.component';
+import { cloneDeep } from 'lodash';
+import { ScheduledControlTimeFrameComponent } from '../scheduled-control-time-frame/scheduled-control-time-frame.component';
+import { take } from 'rxjs/operators';
 
 @Component({
     selector: 'app-device',
@@ -23,12 +28,17 @@ export class DeviceComponent implements OnInit {
     public formGroup: FormGroup;
     public panelOpenState = false;
 
+    private originalDeviceData: IDevice;
+
     constructor(
         private readonly formBuilder: FormBuilder,
-        private readonly deviceService: DeviceService
+        private readonly deviceService: DeviceService,
+        private readonly dialog: MatDialog,
     ) {}
 
     public ngOnInit(): void {
+        this.originalDeviceData = cloneDeep(this.device);
+
         this.initializeForm();
 
         this.formGroup.get('isCurrentAlarmEnabled').valueChanges.subscribe((isEnabled) => {
@@ -107,8 +117,46 @@ export class DeviceComponent implements OnInit {
         }
     }
 
+    public openScheduledControlModal(): void {
+        const dialogRef = this.dialog.open(ScheduledControlModalComponent, {
+            maxWidth: '850px',
+            width: '750px',
+            data: this.device.scheduledControl
+        });
+
+        dialogRef.afterClosed()
+            .pipe(take(1))
+            .subscribe((result: IScheduledControl[]) => {
+                if (result) {
+                    this.device = {
+                        ...this.device,
+                        scheduledControl: result,
+                    }
+                }
+        });
+    }
+
+    public openAddScheduledControlModal(): void {
+        const dialogRef = this.dialog.open(ScheduledControlTimeFrameComponent, {
+            maxWidth: '750px',
+            data: this.device.scheduledControl
+        });
+
+        dialogRef.afterClosed()
+            .pipe(take(1))
+            .subscribe((result: IScheduledControl) => {
+            if (result) {
+                this.device = {
+                    ...this.device,
+                    scheduledControl: [...(this.device.scheduledControl || []), result],
+                }
+            }
+        });
+    }
+
     private resetDevice(): void {
-        this.formGroup.reset(this.device);
+        this.formGroup.reset(this.originalDeviceData);
+        this.device = cloneDeep(this.originalDeviceData);
         this.initializeForm();
         this.panelOpenState = false;
     }

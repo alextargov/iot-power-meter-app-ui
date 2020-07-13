@@ -1,0 +1,49 @@
+<h1 mat-dialog-title>Add scheduled control</h1>
+<div class="scheduled-control-modal--content" mat-dialog-content>
+    <div class="scheduled-control-modal--content-row">
+        <mat-form-field class="scheduled-control-modal--content-input">
+            <mat-label>Start date</mat-label>
+            <input matInput [(ngModel)]="scheduledControl.startDate" [matDatepicker]="pickerStart">
+            <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+            <mat-datepicker #pickerStart></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="scheduled-control-modal--content-input">
+            <input
+                placeholder="Start time"
+                [ngxTimepicker]="min"
+                matInput
+                [format]="24"
+                readonly
+                [(ngModel)]="scheduledControl.startTime"
+            >
+            <ngx-material-timepicker [disableAnimation]="true" #min></ngx-material-timepicker>
+            <mat-icon class="time-frame--datepickers-icon" matSuffix>close</mat-icon>
+        </mat-form-field>
+    </div>
+    <div class="scheduled-control-modal--content-row">
+        <mat-form-field class="scheduled-control-modal--content-input">
+            <mat-label>End date</mat-label>
+            <input [(ngModel)]="scheduledControl.endDate" matInput [matDatepicker]="pickerEnd">
+            <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+            <mat-datepicker #pickerEnd></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="scheduled-control-modal--content-input">
+            <input
+                placeholder="End time"
+                [ngxTimepicker]="max"
+                matInput
+                [format]="24"
+                readonly
+                [(ngModel)]="scheduledControl.endTime"
+            >
+            <ngx-material-timepicker [disableAnimation]="true" #max></ngx-material-timepicker>
+            <mat-icon class="time-frame--datepickers-icon" matSuffix>close</mat-icon>
+        </mat-form-field>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Close</button>
+    <button [mat-dialog-close]="scheduledControl" cdkFocusInitial mat-raised-button color="primary">OK</button>
+</div>

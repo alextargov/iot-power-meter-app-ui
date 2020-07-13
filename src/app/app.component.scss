@@ -13,3 +13,8 @@
     margin: 1rem;
     padding: 2rem;
 }
+
+ngx-material-timepicker-container {
+    position: fixed;
+    z-index: 9999;
+}

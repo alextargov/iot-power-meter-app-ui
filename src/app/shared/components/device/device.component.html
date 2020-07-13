@@ -24,17 +24,11 @@
             </mat-form-field>
 
             <mat-form-field class="device--item-details-identification-second">
-                <mat-label>Key*</mat-label>
-                <input matInput formControlName="key">
-                <mat-error *ngIf="formGroup?.get('key')?.errors?.required">Key is required</mat-error>
+                <mat-label>Host*</mat-label>
+                <input matInput formControlName="host">
+                <mat-error *ngIf="formGroup?.get('host')?.errors?.required">Host is required</mat-error>
             </mat-form-field>
         </div>
-        <mat-form-field class="device--item-details-communication-first">
-            <mat-label>Host*</mat-label>
-            <input matInput formControlName="host">
-            <mat-error *ngIf="formGroup?.get('host')?.errors?.required">Host is required</mat-error>
-        </mat-form-field>
-
         <mat-form-field class="device--item-details-communication-second">
             <mat-label>ID*</mat-label>
             <input matInput formControlName="deviceId">
@@ -69,6 +63,13 @@
         <div class="device--item-details-row">
             <mat-slide-toggle formControlName="isRunning">{{ formGroup?.controls?.isRunning?.value ? 'Running' : 'Not running' }}</mat-slide-toggle>
             <span *ngIf=" device._id">Updated at: {{ device.updatedAt | date:'medium'}}</span>
+
+            <button mat-icon-button color="primary" matTooltip="List scheduled control" aria-label="Add schedule run" (click)="openScheduledControlModal()">
+                <mat-icon>alarm</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" matTooltip="Add scheduled control" aria-label="Add schedule run" (click)="openAddScheduledControlModal()">
+                <mat-icon>add_alarm</mat-icon>
+            </button>
         </div>
         <div class="device--item-details-controls">
             <div class="device--item-details-controls-left">

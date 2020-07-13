@@ -1,3 +1,10 @@
+export interface IScheduledControl {
+    startDate: Date;
+    startTime: string;
+    endDate: Date;
+    endTime: string;
+}
+
 export interface IDevice {
     _id?: string;
     userId: string;
@@ -13,6 +20,7 @@ export interface IDevice {
     currentAlarmThreshold: number;
     voltageAlarmThreshold: number;
     powerAlarmThreshold: number;
+    scheduledControl: Array<IScheduledControl>;
     createdAt?: number;
     updatedAt?: number;
 }
