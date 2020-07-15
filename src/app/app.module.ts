@@ -19,11 +19,23 @@ import { AuthModule } from './modules/auth/auth.module';
 import { StatisticsModule } from './modules/statistics/statistics.module';
 import { DevicesModule } from './modules/devices/devices.module';
 import { JwtModule } from '@auth0/angular-jwt';
-
+import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
+import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 export const tokenGetter = () => {
     return localStorage.getItem('access_token');
 }
 
+export const MY_FORMATS = {
+    parse: {
+        dateInput: 'LL',
+    },
+    display: {
+        dateInput: 'LL',
+        monthYearLabel: 'MMM YYYY',
+        dateA11yLabel: 'LL',
+        monthYearA11yLabel: 'MMMM YYYY',
+    },
+};
 @NgModule({
     declarations: [
         AppComponent
@@ -54,6 +66,13 @@ export const tokenGetter = () => {
             // tslint:disable-next-line no-string-literal
             useFactory: () => window['_env_'],
         },
+        {
+            provide: DateAdapter,
+            useClass: MomentDateAdapter,
+            deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+          },
+
+          {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
     ],
     bootstrap: [AppComponent]
 })

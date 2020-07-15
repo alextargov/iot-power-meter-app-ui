@@ -19,7 +19,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 @NgModule({
     exports: [
         CommonModule,
@@ -43,6 +43,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
         MatExpansionModule,
         MatSlideToggleModule,
         MatDialogModule,
+        MatSnackBarModule
     ],
     imports: [
         CommonModule,
@@ -66,6 +67,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
         MatExpansionModule,
         MatSlideToggleModule,
         MatDialogModule,
+        MatSnackBarModule
     ],
 })
 export class CoreModule {}
