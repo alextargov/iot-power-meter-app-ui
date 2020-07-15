@@ -9,6 +9,4 @@ import { FormGroup } from '@angular/forms';
 })
 export class ScheduledControlTimeFrameComponent {
     public scheduledControl = { startDate: new Date(), startTime: '00:00', endDate: new Date(), endTime: '23:59' };
-
-    constructor() {}
 }

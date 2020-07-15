@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
 import { FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import * as moment from 'moment';
 
 import { IScheduledControl } from '../../services/device/device.interface';
 
@@ -35,8 +35,8 @@ export class ScheduledControlModalComponent implements OnInit {
     private buildFormArray(scheduledControls: IScheduledControl[]): FormGroup[] {
         return scheduledControls.map((scheduledControl) => {
             return this.fb.group({
-                startDate: new FormControl(scheduledControl.startDate),
-                endDate: new FormControl(scheduledControl.endDate),
+                startDate: new FormControl(moment(scheduledControl.startDate).format('LL')),
+                endDate: new FormControl(moment(scheduledControl.endDate).format('LL')),
                 startTime: new FormControl(scheduledControl.startTime),
                 endTime: new FormControl(scheduledControl.endTime),
             });

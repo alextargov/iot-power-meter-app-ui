@@ -6,7 +6,7 @@
         <div [formGroupName]="i" class="scheduled-control-modal--content-row">
             <mat-form-field class="scheduled-control-modal--content-input">
                 <mat-label>Start date</mat-label>
-                <input matInput formControlName="startDate">
+                <input matInput readonly formControlName="startDate">
             </mat-form-field>
 
             <mat-form-field class="scheduled-control-modal--content-input">
@@ -20,7 +20,7 @@
 
             <mat-form-field class="scheduled-control-modal--content-input">
                 <mat-label>End date</mat-label>
-                <input formControlName="endDate" matInput >
+                <input formControlName="endDate" readonly matInput>
             </mat-form-field>
 
             <mat-form-field class="scheduled-control-modal--content-input">

@@ -18,13 +18,12 @@
                 [(ngModel)]="scheduledControl.startTime"
             >
             <ngx-material-timepicker [disableAnimation]="true" #min></ngx-material-timepicker>
-            <mat-icon class="time-frame--datepickers-icon" matSuffix>close</mat-icon>
         </mat-form-field>
     </div>
     <div class="scheduled-control-modal--content-row">
         <mat-form-field class="scheduled-control-modal--content-input">
             <mat-label>End date</mat-label>
-            <input [(ngModel)]="scheduledControl.endDate" matInput [matDatepicker]="pickerEnd">
+            <input [(ngModel)]="scheduledControl.endDate" matInput (dateChange)="endDateChange($event)" [matDatepicker]="pickerEnd">
             <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
             <mat-datepicker #pickerEnd></mat-datepicker>
         </mat-form-field>
@@ -39,7 +38,6 @@
                 [(ngModel)]="scheduledControl.endTime"
             >
             <ngx-material-timepicker [disableAnimation]="true" #max></ngx-material-timepicker>
-            <mat-icon class="time-frame--datepickers-icon" matSuffix>close</mat-icon>
         </mat-form-field>
     </div>
 </div>
