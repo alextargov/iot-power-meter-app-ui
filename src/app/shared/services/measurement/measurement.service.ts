@@ -14,14 +14,14 @@ export class MeasurementService  {
 
     public getMeasurements(timeFrame, isCronRunning: boolean = false): Observable<IMeasurement[]> {
         if (!isCronRunning) {
-            // this.loadingOverlayService.show();
+            this.loadingOverlayService.show();
         }
         return this.apiService.request(this.route, { data: timeFrame })
     }
 
     public getDeviceMeasurements(timeFrame, device: string, isCronRunning: boolean = false): Observable<[]> {
         if (!isCronRunning) {
-            // this.loadingOverlayService.show();
+            this.loadingOverlayService.show();
         }
 
         return this.apiService.request(`${this.route}/${device}`, {
