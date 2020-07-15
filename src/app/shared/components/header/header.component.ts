@@ -5,7 +5,7 @@ import { AuthService } from '../../services/auth/auth.service';
 import { IUserAlarm } from '../../services/auth/user.interface';
 import { AlarmsModalComponent } from '../alarms-modal/alarms-modal.component';
 import { SubscribedComponent } from '../subscribed/subscribed.component';
-import { takeUntil, switchMap } from 'rxjs/operators';
+import { takeUntil, switchMap, take } from 'rxjs/operators';
 import { SocketService } from '../../services/socket/socket.service';
 import { SocketEvent } from '../../constants/socket.constant';
 import { MeasurementService } from '../../services/measurement/measurement.service';
@@ -40,7 +40,7 @@ export class HeaderComponent extends SubscribedComponent implements OnInit {
             .subscribe((alarm) => {
                 this.setAlarms([...this.userAlarms, alarm]);
 
-                if (this.alarmModalRef) {
+                if (this.alarmModalRef && this.alarmModalRef.componentInstance) {
                     this.alarmModalRef.componentInstance.userAlarms = this.userAlarms;
                     this.alarmModalRef.componentInstance.ngOnInit();
                 }
@@ -65,7 +65,7 @@ export class HeaderComponent extends SubscribedComponent implements OnInit {
         this.alarmModalRef.componentInstance.onReadAll
             .pipe(
                 switchMap(() => this.authService.markUserAlarmAsRead()),
-                takeUntil(this.componentDestroyed$),
+                take(1),
             )
             .subscribe((newAlarms) => {
                 this.setAlarms(newAlarms);

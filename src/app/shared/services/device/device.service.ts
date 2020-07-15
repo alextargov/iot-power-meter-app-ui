@@ -28,7 +28,7 @@ export class DeviceService  {
         return this.apiService.request(`${this.route}/user/${userId}`);
     }
 
-    public createDevice(data: IDevice): Observable<IDevice> {
+    public createDevice(data: IDevice): Observable<{ data: IDevice, error: number }> {
         const hydratedData: IDevice = {
             ...data,
             userId: this.authService.getUser()._id
@@ -40,7 +40,7 @@ export class DeviceService  {
         });
     }
 
-    public updateDevice(id: string, data: IDevice): Observable<IDevice> {
+    public updateDevice(id: string, data: IDevice): Observable<{ data: IDevice, error: number }> {
         return this.apiService.request(`${this.route}/${id}`, {
             method: 'put',
             data
