@@ -1,17 +1,20 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter} from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { MatAccordion } from '@angular/material/expansion';
+import { MatDialog } from '@angular/material/dialog';
 import slugify from 'slugify';
 import { v4 as uuid4 } from 'uuid';
+import { take } from 'rxjs/operators';
+import { cloneDeep } from 'lodash';
 
 import { IDevice, IScheduledControl } from '../../services/device/device.interface';
 import { DeviceService } from '../../services/device/device.service';
 import { defaultDeviceHost } from '../../constants/device.constant';
-import { MatDialog } from '@angular/material/dialog';
 import { ScheduledControlModalComponent } from '../scheduled-control/scheduled-control-modal.component';
-import { cloneDeep } from 'lodash';
-import { ScheduledControlTimeFrameComponent } from '../scheduled-control-time-frame/scheduled-control-time-frame.component';
-import { take } from 'rxjs/operators';
+import { ScheduledControlTimeFrameComponent } from '../scheduled-control-time-frame/scheduled-control-time-frame.component'
+import { noConnectionToDevice } from '../../constants/error-codes';
+import { LoadingOverlayService } from '../../services/loading-overlay/loading-overlay.service';
 
 @Component({
     selector: 'app-device',
@@ -29,11 +32,19 @@ export class DeviceComponent implements OnInit {
     public panelOpenState = false;
 
     private originalDeviceData: IDevice;
+    private readonly snackOptions: MatSnackBarConfig<any> = {
+        duration: 5000,
+        verticalPosition: 'bottom',
+        horizontalPosition: 'center',
+        politeness: 'off',
+    };
 
     constructor(
         private readonly formBuilder: FormBuilder,
         private readonly deviceService: DeviceService,
         private readonly dialog: MatDialog,
+        private readonly snackBar: MatSnackBar,
+        private readonly loadingOverlayService: LoadingOverlayService,
     ) {}
 
     public ngOnInit(): void {
@@ -77,6 +88,8 @@ export class DeviceComponent implements OnInit {
     }
 
     public onSave(): void {
+        this.loadingOverlayService.show();
+
         const formData = this.formGroup.getRawValue();
         const dataToSave = {
             ...this.device,
@@ -90,13 +103,17 @@ export class DeviceComponent implements OnInit {
         action.subscribe((device) => {
             this.panelOpenState = false;
 
+            device.error && device.error === noConnectionToDevice ?
+                this.snackBar.open('Data saved but could not reach the device to apply changes', 'OK', this.snackOptions) :
+                this.snackBar.open(device.data._id ? 'Updates applied' : 'Device created', 'OK', this.snackOptions);
+
             if (this.device._id) {
-                this.device = device;
+                this.device = device.data;
             } else {
                 this.resetDevice();
-                this.onDeviceCreate.emit(device);
+                this.onDeviceCreate.emit(device.data);
             }
-        });
+        }, () => {}, () => this.loadingOverlayService.hide());
     }
 
     public onCancel(): void {
@@ -106,6 +123,7 @@ export class DeviceComponent implements OnInit {
     public onDelete(): void {
         this.deviceService.deleteDevice(this.device._id).subscribe(() => {
             this.onDeviceDelete.emit(this.device._id);
+            this.snackBar.open('Device deleted successfully', 'OK', this.snackOptions);
         });
     }
 
@@ -139,6 +157,7 @@ export class DeviceComponent implements OnInit {
     public openAddScheduledControlModal(): void {
         const dialogRef = this.dialog.open(ScheduledControlTimeFrameComponent, {
             maxWidth: '750px',
+            width: '400px',
             data: this.device.scheduledControl
         });
 
